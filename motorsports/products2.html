@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>IPS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <style> 
+        /* Remove the navbars default rounded borders and increase the bottom margin */
+        
+        .navbar {
+            margin-bottom: 50px;
+            border-radius: 0;
+        }
+        /* Remove the jumbotrons default bottom margin */
+        
+        .jumbotron {
+            margin-bottom: 0;
+        }
+        /* Add a gray background color and some padding to the footer */
+        
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
+        /* IMAGEN DETALLE */
+        /* The Modal (background) */
+        /* The Close Button */
+        
+        .close {
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .cursor {
+            cursor: pointer
+        }
+        
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+        
+        img.hover-shadow {
+            transition: 0.3s
+        }
+        
+        .hover-shadow:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+        }
+        
+        .list-product-name {
+            text-decoration: underline;
+            color: #337ab7;
+            cursor: pointer
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+
+    <script src="resources/lib/boostrap/bootbox.min.js"></script>
+</head>
+
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 0px !important;">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img alt="Brand" src="resources/img/logo_nuevo.PNG" class="img-circle" alt="IPS Logo" width="35" height="35">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active"><a href="products.html">Products</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>-->
+                        <li><a href="cart.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart ({{cartLength}})</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- Categorias -->
+        <div class="container" style="margin-top:52px; width:100%">
+            <div class="row">
+
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <div class="row">
+
+                                <div class="col-sm-1">
+                                    <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <b>Category</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select id="filter-category" class="form-control filter-product" ng-model="selectedCategory" data-filter="{{selectedCategory}}">
+                                        <option value="all" selected="true">All</option>
+                                        <option value="{{category.name}}" ng-repeat="category in categories">{{category.description}}</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-1">
+                                    &nbsp;
+                                </div>
+                                <div class="col-sm-1">
+                                    <b>Brand</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select id="filter-brand" class="form-control filter-product" ng-model="selectedBrand" data-filter="{{selectedBrand}}">
+                                        <option value="all" selected="true">All</option>
+                                        <option id= "{{brand.name}}" value="{{brand.name}}" ng-repeat="brand in brands" ng-repeat-end-watch="addHomeFilter()">{{brand.description}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Pagination -->
+                    <center>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center pagination-lg">
+                                <li class="page-item" ng-click="onClickPage(currentPage - 1)">
+                                    <span class="page-link" aria-label="Previous" style="cursor: pointer;">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                    </span>
+                                </li>
+                                <li class="page-item {{page.style}}" ng-repeat="page in pages" ng-click="onClickPage(page.page)">
+                                    <span class="page-link" style="cursor: pointer;">{{page.page + 1}}</span>
+                                </li>
+                                <li class="page-item" ng-click="onClickPage(currentPage + 1)">
+                                    <span class="page-link" aria-label="Next" style="cursor: pointer;">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </center>
+
+                <div class="container" ng-cloak>
+                    <!--<div class="row" ng-repeat="rows in products">-->
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-6 filter {{p.category_name}}  {{p.brand_name}}" ng-repeat="p in products">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <center>
+                                        <img ng-if="p.photos.length > 0" src="data:{{p.photos[0].filetype}};base64,{{p.photos[0].base64}}" class=" rounded" style="height:150px !important; width:130px;"
+                                            alt="product">
+                                        <img ng-if="p.photos.length == 0" src="resources/img/products/empty-img.png" class=" rounded" style="height:150px !important; width:130px;"
+                                            alt="product">
+                                    </center>
+                                </div>
+                                <div class="panel-footer" style="font-size:xx-small; height: 80px;">
+                                    <h6 class="list-product-name" style="text-align: center;" ng-click="onClickProductView(p)" data-toggle="modal" data-target="#productDetail"><b>{{p.name}}</b></h6>
+                                    <h6 ng-if="p.low_price == '0'" style="text-align: center;"><b>${{p.price}} </b></h6>
+                                    <h6 ng-if="p.low_price != '0'" style="text-align: center;"><b><strike>${{p.price}}</strike><span style="color: red"> ${{p.low_price}}</span> </b></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <center>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center pagination-lg">
+                                <li class="page-item" ng-click="onClickPage(currentPage - 1)">
+                                    <span class="page-link" aria-label="Previous" style="cursor: pointer;">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                    </span>
+                                </li>
+                                <li class="page-item {{page.style}}" ng-repeat="page in pages" ng-click="onClickPage(page.page)">
+                                    <span class="page-link" style="cursor: pointer;">{{page.page + 1}}</span>
+                                </li>
+                                <li class="page-item" ng-click="onClickPage(currentPage + 1)">
+                                    <span class="page-link" aria-label="Next" style="cursor: pointer;">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </center>
+
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="container-fluid text-center">
+            <p>Online Store Copyright</p>
+        </footer>
+
+        <!-- Modal -->
+        <div class="modal fade" id="productDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">
+                            <b>{{productDetail.name}}</b>
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <img id="productDetailImage" src="data:{{productDetail.photos[0].filetype}};base64,{{productDetail.photos[0].base64}}" style="width:100%"
+                                        onclick="openModal(); " class="hover-shadow cursor">
+                                </div>
+                                <div class="col-sm-8">
+
+                                    <p ng-bind-html="productDetail.short_description"></p>
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-body" style="margin-bottom: 0px">
+
+                                            <div class="row">
+                                                <div class="col-sm-4 col-lg-4 col-xs-4">
+                                                    <h6 ng-if="productDetail.low_price == '0'" style="text-align: center;">Price: <b>${{productDetail.price}} </b></h6>
+                                                    <h6 ng-if="productDetail.low_price != '0'" style="text-align: center;">Price: <b><strike>${{productDetail.price}}</strike><span style="color: red"> ${{productDetail.low_price}}</span> </b></h6>
+                                                </div>
+                                                <div class="col-sm-8 col-lg-8 col-xs-8">
+                                                    <span ng-if="productDetail.stock > 0" class="text-success" style="float: right;"><b>In stock</b></span>
+                                                    <div class="send-message-facebook" data-dismiss="modal">
+                                                        <span ng-if="productDetail.stock < 1" class="text-danger" style="cursor: pointer; float: right;"><u><b>Please check availability.</b></u></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <p/>
+
+                                            <div class="row">
+                                                <div class="col-sm-4 col-lg-4 col-xs-4">
+                                                    <input type="text" class="form-control" value="{{productQuantity}}" disabled style="width:100%;">
+                                                </div>
+                                                <div class="col-sm-2 col-lg-2 col-xs-2" style="display:inline-flex">
+                                                    <button type="button" class="btn btn-default btn-sm" ng-click="onClickAddProduct(productDetail)" ng-disabled="productDetail.stock < 1">
+                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                    </button> &nbsp;
+                                                    <button type="button" class="btn btn-default btn-sm" ng-click="onClickRemoveProduct()" ng-disabled="productDetail.stock < 1">
+                                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="col-sm-6 col-lg-6 col-xs-6">
+                                                    <button style="float: right;" type="button" class="btn btn-danger btn-sm" ng-click="clickAddToCart(productDetail)" ng-disabled="productDetail.stock < 1">ADD TO CART</button>
+                                                </div>
+                                            </div>
+                                            <div id="id-message-stock" class="alert alert-warning" style="margin-top: 20px; margin-bottom: 0px !important;" hidden>
+                                                <!--<strong>Warning!</strong> {{productQuantity}} is the maximum order number
+                                                for this product.-->
+                                                <div class="send-message-facebook" data-dismiss="modal" style="cursor: pointer">
+                                                    <u>Please check availability. </u>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" ng-click="onClickProductViewDetail(productDetail)">View detail</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <!-- Facebook chat -->
+
+    <style>
+        .ctrlq.fb-close {
+            position: fixed;
+            right: 24px;
+            cursor: pointer
+        }
+        
+        .fb-widget {
+            background: #fff;
+            z-index: 2;
+            position: fixed;
+            width: 360px;
+            overflow: hidden;
+            opacity: 0;
+            right: 24px;
+            border-radius: 6px;
+            -o-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
+            -webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
+            -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
+            -o-box-shadow: 0 5px 40px rgba(0, 0, 0, .16)
+        }
+        
+        .fb-credit {
+            text-align: center;
+            margin-top: 8px
+        }
+        
+        .fb-credit a {
+            transition: none;
+            color: #bec2c9;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            text-decoration: none;
+            border: 0;
+            font-weight: 400
+        }
+        
+        .ctrlq.fb-overlay {
+            z-index: 0;
+            position: fixed;
+            height: 100px;
+            width: 100px;
+            -webkit-transition: opacity .4s, visibility .4s;
+            transition: opacity .4s, visibility .4s;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, .05);
+        }
+        
+        .ctrlq.fb-close {
+            z-index: 4;
+            padding: 0 6px;
+            background: #365899;
+            font-weight: 700;
+            font-size: 11px;
+            color: #fff;
+            margin: 8px;
+            border-radius: 3px;
+        }
+        
+        .ctrlq.fb-close::after {
+            content: 'x';
+            font-family: sans-serif;
+        }
+    </style>
+
+    <div class="fb-livechat">
+        <div class="fb-widget">
+            <div class="ctrlq fb-close"></div>
+            <div class="fb-page" data-href="https://www.facebook.com/IPSmotorsports/" data-tabs="messages" data-width="360" data-height="400"
+                data-small-header="true" data-hide-cover="true" data-show-facepile="false">
+                <blockquote cite="https://www.facebook.com/IPSmotorsports/" class="fb-xfbml-parse-ignore"> </blockquote>
+            </div>
+
+        </div>
+        <!--<a href="https://m.me/IPSmotorsports" title="Send us a message on Facebook" class="ctrlq fb-button"></a>-->
+    </div>
+
+    <script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+    <script>
+        var app = angular.module('myApp', ['ngSanitize']);
+
+        app.controller('myCtrl', function ($scope, $http) {
+
+            //Inicializar aplicacion
+
+            //Variables
+            $scope.products = [];
+            $scope.categories = [];
+            $scope.brands = [];
+            $scope.selectedCategory = "all";
+            $scope.selectedBrand = "all";
+            $scope.productsByPage = 20;
+            $scope.currentPage = 0;
+
+            if (!sessionStorage.getItem("cart")) {
+                sessionStorage.setItem("cart", '[]');
+            }
+
+            $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
+            $scope.productDetail = undefined;
+            $scope.productQuantity = undefined; //Cantidad de productos encargados
+
+            $http.get("bd_products.php?data=totalProducts")
+                .then(function (response) {
+
+                    $scope.totalProducts = parseInt(response.data);
+                    $scope.pages = [];
+
+                    for (var x = 0; x < Math.ceil(($scope.totalProducts / $scope.productsByPage)); x++) {
+                        $scope.pages.push({
+                            page: x,
+                            style: x == 0 ? "active" : ""
+                        });
+                    }
+
+                });
+
+
+            $http.get("bd_products.php?data=producto&productsByPage=" + $scope.productsByPage + "&currentPage=0")
+                .then(function (response) {
+                    $scope.products = response.data;
+                });
+
+
+            $http.get("bd_products.php?data=categoria")
+                .then(function (response) {
+                    $scope.categories = response.data;
+                });
+
+            $http.get("bd_products.php?data=brand")
+                .then(function (response) {
+                    $scope.brands = response.data;
+                });
+
+
+            //Functions
+            $scope.clickAddToCart = function (product) {
+
+                delete product.$$hashKey;
+
+                var cartList = JSON.parse(sessionStorage.getItem("cart"));
+                product.quantity = $scope.productQuantity;
+
+                //verificar si ya existe
+                var productIndex = cartList.findIndex(function (item) {
+                    return item.id_product == product.id_product;
+                });
+
+                if (productIndex == -1) {
+                    cartList.push(product);
+                } else {
+                    cartList[productIndex].quantity = cartList[productIndex].quantity + product.quantity
+                    product = cartList[productIndex];
+                }
+
+                $http.get("bd_products.php?data=productStock&id_product=" + product.id_product)
+                    .then(function (response) {
+
+                        var stock = parseInt(response.data);
+
+                        if (product.quantity <= stock) {
+
+                            sessionStorage.setItem("cart", JSON.stringify(cartList));
+                            $scope.cartLength = cartList.length;
+
+                            bootbox.alert({
+                                message: '"' + product.name + '" was successfully added to the cart.',
+                                size: 'small'
+                            });
+                        } else {
+                            document.getElementById("id-message-stock").hidden = false;
+                        }
+                    });
+
+            }
+
+
+            //Events
+            $scope.onClickProductView = function (product) {
+                // consulta por id;
+
+                $http.get("bd_products.php?data=productoDetalle&productId=" + product.id_product)
+                    .then(function (response) {
+                        $scope.productDetail = response.data[0];;
+                        $scope.productQuantity = 1;
+                        document.getElementById("id-message-stock").hidden = true;
+                    });
+
+
+            }
+
+            $scope.onClickAddProduct = function (product) {
+
+                $http.get("bd_products.php?data=productStock&id_product=" + product.id_product)
+                    .then(function (response) {
+
+                        var stock = parseInt(response.data);
+
+                        if ($scope.productQuantity < stock) {
+                            $scope.productQuantity++;
+                        } else {
+                            document.getElementById("id-message-stock").hidden = false;
+                        }
+
+                    });
+            }
+
+            $scope.onClickRemoveProduct = function () {
+                if ($scope.productQuantity > 1) {
+                    $scope.productQuantity--;
+                }
+
+                document.getElementById("id-message-stock").hidden = true;
+            }
+
+            $scope.onClickProductViewDetail = function (product) {
+                window.location.href = "http://motorsports.innopartserv.com/product.html?product=" + product.id_product;
+            }
+
+            $scope.onClickPage = function (page) {
+
+                if (page < 0) {
+                    page = 0;
+                }
+
+                if (page > $scope.pages.length - 1) {
+                    page = $scope.pages.length - 1;
+                }
+
+                $scope.currentPage = page;
+
+                $scope.pages.map(function (item) {
+                    if (item.page == page) {
+                        item.style = "active";
+                    } else {
+                        item.style = "";
+                    }
+                });
+
+                $http.get("bd_products.php?data=producto&productsByPage=" + $scope.productsByPage + "&currentPage=" + page)
+                    .then(function (response) {
+                        $scope.products = response.data;
+                    });
+
+            }
+
+
+        });
+
+
+        $(document).ready(function () {
+
+            $(".fb-close").on("click", function (e) {
+                $(".fb-widget").hide("slow");
+            });
+
+            $(".send-message-facebook").on("click", function (e) {
+                $(".fb-widget").show().animate({ bottom: "30px", opacity: 1 }, 2 * 125);
+                $("._58an").focus();
+            });
+
+            $('body').on('change', '.filter-product', function () {
+
+                var filterCategory = "." + document.getElementById("filter-category").value;
+                var filterBrand = "." + document.getElementById("filter-brand").value;
+
+                if (filterCategory == ".all" && filterBrand == ".all") {
+                    $('.filter').show('1000');
+                } else {
+                    if (filterCategory == ".all") {
+                        filterCategory = "";
+                    }
+                    if (filterBrand == ".all") {
+                        filterBrand = "";
+                    }
+                    $(".filter").not(filterCategory + filterBrand).hide('3000');
+                    $('.filter' + filterCategory + filterBrand).show('3000');
+                }
+            });
+
+            // Esperar a que angular carge todas las marcas.
+            setTimeout(function () {
+
+                var reg = new RegExp('[?&]brand=([^&#]*)', 'i');
+                var string = reg.exec(window.location.href);
+
+                document.getElementById("filter-brand").value = string ? string[1] : "all";
+
+                var filterCategory = ".all"
+                var filterBrand = string ? "." + string[1] : ".all"
+
+                if (filterCategory == ".all" && filterBrand == ".all") {
+                    $('.filter').show('1000');
+                } else {
+                    if (filterCategory == ".all") {
+                        filterCategory = "";
+                    }
+                    if (filterBrand == ".all") {
+                        filterBrand = "";
+                    }
+                    $(".filter").not(filterCategory + filterBrand).hide('3000');
+                    $('.filter' + filterCategory + filterBrand).show('3000');
+                }
+
+            }, 500);
+        });
+
+
+
+        //Imagen modal en detalle del producto
+        function openModal() {
+            document.getElementById('myModal').style.display = "block";
+            document.getElementById('productDetail').style.display = "none";
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = "none";
+            document.getElementById('productDetail').style.display = "block";
+        }
+    </script>
+
+
+</body>
+
+</html>
