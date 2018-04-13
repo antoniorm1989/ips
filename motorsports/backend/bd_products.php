@@ -68,7 +68,6 @@ if($data == "paginatedProducts"){
 
 	    while($row = $result->fetch_assoc()) {
 		
-
 				$result_json_photo = "[";
 				$sqlPhotos = "SELECT json_data as json_data FROM innopbbl_tienda.photo WHERE id_product = ".$row["id_product"]." LIMIT 1;";
 				$resultPhotos = $conn->query($sqlPhotos);
