@@ -75,7 +75,7 @@
                     <tr ng-repeat="p in products  | filter: searchKeyword ">
                         <td>{{ $index + 1 }}</td>
                         <td>
-                            <img width="100" height="80" src="../motorsports/resources/img/products/{{p.photo}}" />
+                            <img width="100" height="80" src="../motorsports/resources/img/products/{{ getFirstPhoto(p.photos) }}" />
                         </td>
                         <td>{{ p.part_number}}</td>
                         <td>{{ p.name}}</td>
@@ -171,64 +171,32 @@
 
             <div class="form-group">
 
-                <div class="input-group">
-
-                    <!--<form action="upload.php" method="post" enctype="multipart/form-data">
-                        Select image to upload:
-                        <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="submit" value="Upload Image" name="submit">
-                    </form>-->
-
-                    <input type="file" id="file" name="file"/>
-                    <button ng-click="uploadFiles()">Upload file</button>
-
-
-                    <!--<label for="file">Select photos</label>
-                    <span class="help-block">
-                            <ul>
-                                <li>required</li>
-                                <li>minsize = 500</li>
-                                <li>accept = image/*</li>
-                            </ul>
-                        </span>
-
-                    <input type="file" ng-model="files" name="files" base-sixty-four-input multiple accept="image/*, .zip" minsize="500" required
-                        minnum="2" on-change="onChange" onload="onLoadPhotos">-->
-                </div>
+                <button data-toggle="modal" data-target="#selectPhoto" ng-click='getPhotos()'>Add photo</button>
 
                 <table class="table table-bordered" style="background-color: ghostwhite;">
                     <tr>
                         <th>Photo</th>
                         <th>Name</th>
-                        <th>Type</th>
-                        <th>Size (
-                            <i>
-                                    <small>KB</small>
-                                </i>)</th>
                         <th>Actions</th>
-                        <!-- <th>base64</th> -->
                     </tr>
                     <tr ng-repeat="photo in product.photos">
                         <th>
                             <center>
-                                <img width="150" height="100" src="data:{{photo.filetype}};base64,{{photo.base64}}">
+                                <img width="150" height="100" src="../motorsports/resources/img/products/{{photo}}">
                             </center>
                         </th>
-                        <td>{{photo.filename}}</td>
-                        <td>{{photo.filetype}}</td>
-                        <td>{{photo.filesize / 1000}}</td>
+                        <td>{{photo}}</td>
                         <td>
                             <button type="button" class="btn btn-default btn-sm" ng-click="onClickRemovePhoto(photo)">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
                         </td>
-                        <!-- <td>{{file.base64.substring(0, 30)}}...</td> -->
                     </tr>
                     <tr>
                         <td colspan="4" ng-show="files.length == 0">
                             <small>
-                                    <i>No photo selected.</i>
-                                </small>
+                                <i>No photo selected.</i>
+                            </small>
                         </td>
                     </tr>
                 </table>
@@ -243,6 +211,56 @@
 
         </div>
 
+
+        <!-- Modal fotos -->
+        <div class="modal fade" id="selectPhoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="col-sm-4">
+                            <h4 class="modal-title" id="exampleModalLabel">
+                                <b>Seleccion de foto</b>
+                            </h4>
+                        </div>
+                        <div class="col-sm-8">
+                            <table style="float: right;">
+                                <tr>
+                                    <td><input type='file' name='file' id='file'><br/></td>
+                                    <td><input type='button' class="btn btn-success" value='Upload' id='upload' ng-click='uploadFiles()'></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="container-fluid">
+
+                            <div class="row" style="height: 400px; overflow-y: auto;">
+                                <div class="col-lg-2 col-sm-2 col-xs-3" ng-repeat="f in filesServer" ng-click="setSelectedPhoto(f)">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <center>
+                                                <img src="../motorsports/resources/img/products/{{f}}" class="rounded" style="height:100px !important; width:80px;">
+                                            </center>
+                                        </div>
+                                        <div class="panel-footer" style="font-size:xx-small; height: 30px;">
+                                            <center><b>{{f}}</b></center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <h6>Foto selecionada : <b>{{selectedPhoto}}</b></h6>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" ng-click="onSelectPhoto(selectedPhoto)" data-dismiss="modal">Seleccionar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -261,6 +279,8 @@
             $scope.brands = undefined;
             $scope.isUpdate = false;
             $scope.product = undefined;
+            $scope.filesServer = [];
+            $scope.selectedPhoto = 'empty-img.png';
 
             document.getElementById("product-register").hidden = true;
             document.getElementById("list-products").hidden = true;
@@ -427,37 +447,74 @@
             }
 
             // Fotos
+            // Obtiene la primera foto para el listado
+            $scope.getFirstPhoto = function (photosJson) {
+                return JSON.parse(photosJson)[0];
+            }
+
+            // Actualiza la foto seleccionada del modal
+            $scope.setSelectedPhoto = function (photo) {
+                $scope.selectedPhoto = photo;
+            }
+
+            // Accion de aceptar del modal seleccion de foto
+            $scope.onSelectPhoto = function () {
+                $scope.product.photos.push($scope.selectedPhoto);
+            }
+
+            // Obtiene las fotos disponibles del server
+            $scope.getPhotos = function () {
+
+                $scope.selectedPhoto = 'empty-img.png';
+
+                $http.get("upload.php/?data=getFilesServer&store=motorsport")
+                    .then(function (response) {
+
+                        response.data.shift(); // removemos los primeros dos "." y ".."
+                        response.data.shift();
+                        $scope.filesServer = response.data;
+
+                    }, function (error) {
+                        alert(error.data)
+                    });
+            }
+
+            // Sube una nueva foto al server
             $scope.uploadFiles = function () {
+
+                var formData = new FormData();
+                var files = document.getElementById('file').files[0];
+                formData.append('file', files, files.name);
 
                 $http({
                     method: 'POST',
-                    url: '/upload.php/',
-                    data: $scope.formdata,
-                    headers: {
-                        'Content-Type': undefined
-                    }
-                }).success(function (e) {
-                    alert(e);
-                }).error(function (e) {
-                    alert(e);
+                    url: 'upload.php/?data=uploadFile&store=motorsport',
+                    data: formData,
+                    headers: { 'Content-Type': undefined },
+                }).then(function (response) {
+                    console.log(response.data);
+                    $scope.getPhotos();
+                }, function (error) {
+                    alert(error);
                 });
             }
 
             //$scope.onChange = function (e, fileList) {};
 
-            $scope.onLoadPhotos = function (e, reader, file, fileList, fileOjects, fileObj) {
+            /*$scope.onLoadPhotos = function (e, reader, file, fileList, fileOjects, fileObj) {
                 $scope.product.photos.push(fileObj);
+            };*/
+
+            // Elimina foto del lisatdo de fotos del producto
+            $scope.onClickRemovePhoto = function (photo) {
+
+                $scope.product.photos = $scope.product.photos.filter(function (p) {
+                    return p != photo;
+                });
+
             };
 
-            /* $scope.onClickRemovePhoto = function (photo) {
- 
-                 $scope.product.photos = $scope.product.photos.filter(function (p) {
-                     return p.filename != photo.filename;
-                 });
- 
-             };
- 
-             $scope.files = [];*/
+            //$scope.files = [];
 
         });
 
