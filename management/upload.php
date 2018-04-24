@@ -1,9 +1,27 @@
 <?php
 
-if($_GET["store"] == 'motorsport'){
+switch ($_GET["process"]) {
+    case "product":
+        if($_GET["store"] == 'motorsport'){
 	$target_dir = "../motorsports/resources/img/products/";
-}else{
+	}else{
 	$target_dir = "../motorsports/resources/img/products/";
+	}
+        break;
+    case "category":
+	if($_GET["store"] == 'motorsport'){
+	$target_dir = "../motorsports/resources/img/categories/";
+	}else{
+	$target_dir = "../motorsports/resources/img/categories/";
+	}
+        break;
+    case "brand":
+        if($_GET["store"] == 'motorsport'){
+	$target_dir = "../motorsports/resources/img/brands/";
+	}else{
+	$target_dir = "../motorsports/resources/img/brands/";
+	}
+        break;
 }
 
 $data = $_GET["data"];
