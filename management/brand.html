@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <script src="../motorsports/resources/lib/boostrap/bootbox.min.js"></script>
+
+    <title>IPS Brands</title>
+</head>
+
+<body style="background-color: gainsboro">
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+        <div id="list-brands">
+            <h2>Brand list</h2>
+            <button class="btn btn-success" ng-click="create()">New</button>
+
+            <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: right;width: 30%; margin-right: 20px;">
+
+            <table class="table table-striped table-hover table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="c in brands  | filter: searchKeyword ">
+                        <td>{{ $index + 1 }}</td>
+                        <td>
+                            <img width="100" height="80" src="../motorsports/resources/img/brands/{{ getFirstPhoto(c.photos) }}" />
+                        </td>
+                        <td>{{ c.id_brand}}</td>
+                        <td>{{ c.name}}</td>
+                        <td>{{ c.description}}</td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="delete(c.id_brand)">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                            <button class="btn btn-info" ng-click="update(c.id_brand)">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="register" style="width: 90%; margin: auto;">
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" ng-model="brand.name">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" id="description" ng-model="brand.description">
+            </div>
+
+            <div class="form-group">
+
+                <button data-toggle="modal" data-target="#selectPhoto" ng-click='getPhotos()'>Add photo</button>
+
+                <table class="table table-bordered" style="background-color: ghostwhite;">
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr ng-repeat="photo in brand.photos">
+                        <th>
+                            <center>
+                                <img width="150" height="100" src="../motorsports/resources/img/brands/{{photo}}">
+                            </center>
+                        </th>
+                        <td>{{photo}}</td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="onClickRemovePhoto(photo)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" ng-show="files.length == 0">
+                            <small>
+                                <i>No photo selected.</i>
+                            </small>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <center>
+                <button class="btn btn-default" ng-click="back()">Back</button>
+                <button class="btn btn-primary" ng-click="save()">Save</button>
+            </center>
+            <p/>
+
+        </div>
+
+        <!-- Modal fotos -->
+        <div class="modal fade" id="selectPhoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="col-sm-4">
+                            <h4 class="modal-title" id="exampleModalLabel">
+                                <b>Seleccion de foto</b>
+                            </h4>
+                        </div>
+                        <div class="col-sm-8">
+                            <table style="float: right;">
+                                <tr>
+                                    <td>
+                                        <input type='file' name='file' id='file'>
+                                        <br/>
+                                    </td>
+                                    <td>
+                                        <input type='button' class="btn btn-success" value='Upload' id='upload' ng-click='uploadFiles()'>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="container-fluid">
+
+                            <div class="row" style="height: 400px; overflow-y: auto;">
+                                <div class="col-lg-2 col-sm-2 col-xs-3" ng-repeat="f in filesServer" ng-click="setSelectedPhoto(f)">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body">
+                                            <center>
+                                                <img src="../motorsports/resources/img/brands/{{f}}" class="rounded" style="height:100px !important; width:80px;">
+                                            </center>
+                                        </div>
+                                        <div class="panel-footer" style="font-size:xx-small; height: 30px;">
+                                            <center>
+                                                <b>{{f}}</b>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <h6>Foto selecionada :
+                                    <b>{{selectedPhoto}}</b>
+                                </h6>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" ng-click="onSelectPhoto(selectedPhoto)" data-dismiss="modal">Seleccionar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        var app = angular.module('myApp', []);
+
+        app.controller('myCtrl', function ($scope, $http) {
+
+            $scope.brands = undefined;
+            $scope.brand = undefined;
+            $scope.isUpdate = false;
+            $scope.filesServer = [];
+            $scope.selectedPhoto = 'empty-img.png';
+            document.getElementById("register").hidden = true;
+
+            $scope.getAll();
+
+            $scope.delete = function (id_brand) {
+                bootbox.confirm("Seguro que desea eliminar la categoria?", function (result) {
+                    if (result) {
+                        $http({
+                            method: 'POST',
+                            url: 'data_base.php?data=deleteCategory',
+                            data: { id_brand: id_brand }
+                        }).then(function successCallback(response) {
+                            alert("La categoria ha sido eliminada.");
+                            $scope.getAll();
+                            myApp.hidePleaseWait();
+                        }, function errorCallback(response) {
+                            alert("Algo salio mal.");
+                        });
+                    }
+                });
+            }
+
+            $scope.create = function () {
+                $scope.brand = {
+                    id_brand: 0,
+                    name: "",
+                    description: "",
+                    photos: []
+                };
+                $scope.isUpdate = false;
+                document.getElementById("register").hidden = false;
+                document.getElementById("list").hidden = true;
+            }
+
+            $scope.update = function (id_brand) {
+                myApp.showPleaseWait();
+                $http({
+                    method: 'POST',
+                    url: 'data_base.php?data=getCategoryById&store=' + $scope.store,
+                    data: { id_brand: id_brand }
+                }).then(function successCallback(response) {
+                    $scope.brand = response.data[0];
+                    $scope.isUpdate = true;
+                    document.getElementById("register").hidden = false;
+                    document.getElementById("list").hidden = true;
+                    myApp.hidePleaseWait();
+                }, function errorCallback(response) {
+                    alert("Algo salio mal.");
+                });
+            }
+
+            $scope.save = function () {
+                myApp.showPleaseWait();
+                $scope.brand.photosJson = JSON.stringify($scope.brand.photos);
+                $http({
+                    method: 'POST',
+                    url: 'data_base.php?store=' + $scope.store + '&data=' + ($scope.isUpdate ? 'updateCategory' : 'createCategory'),
+                    data: $scope.brand
+                }).then(function successCallback(response) {
+                    alert("La categoria ha sido " + ($scope.isUpdate ? "modificada." : "creada."));
+                    $scope.getAll();
+                    document.getElementById("register").hidden = true;
+                    document.getElementById("list").hidden = false;
+                    myApp.hidePleaseWait();
+                }, function errorCallback(response) {
+                    alert("Algo salio mal.");
+                    document.getElementById("register").hidden = true;
+                    document.getElementById("list").hidden = false;
+                });
+            }
+
+            $scope.getAll = function () {
+                myApp.showPleaseWait();
+                $http.get("data_base.php?data=getAllCategory&store=" + $scope.store)
+                    .then(function (response) {
+                        if (response.data) {
+                            $scope.brands = response.data;
+                        }
+                        myApp.hidePleaseWait();
+                    });
+                document.getElementById("list-products").hidden = false;
+            }
+
+            $scope.back = function () {
+                document.getElementById("register").hidden = true;
+                document.getElementById("list").hidden = false;
+            }
+
+            // Fotos
+            // Obtiene la primera foto para el listado
+            $scope.getFirstPhoto = function (photosJson) {
+                return JSON.parse(photosJson)[0];
+            }
+
+            // Actualiza la foto seleccionada del modal
+            $scope.setSelectedPhoto = function (photo) {
+                $scope.selectedPhoto = photo;
+            }
+
+            // Accion de aceptar del modal seleccion de foto
+            $scope.onSelectPhoto = function () {
+                $scope.brand.photos.push($scope.selectedPhoto);
+            }
+
+            // Obtiene las fotos disponibles del server
+            $scope.getPhotos = function () {
+                $scope.selectedPhoto = 'empty-img.png';
+                $http.get("upload.php/?data=getFilesServer&store=motorsport")
+                    .then(function (response) {
+                        response.data.shift(); // removemos los primeros dos "." y ".."
+                        response.data.shift();
+                        $scope.filesServer = response.data;
+                    }, function (error) {
+                        alert(error.data)
+                    });
+            }
+
+            // Sube una nueva foto al server
+            $scope.uploadFiles = function () {
+                var formData = new FormData();
+                var files = document.getElementById('file').files[0];
+                formData.append('file', files, files.name);
+                $http({
+                    method: 'POST',
+                    url: 'upload.php/?data=uploadFile&store=motorsport',
+                    data: formData,
+                    headers: { 'Content-Type': undefined },
+                }).then(function (response) {
+                    console.log(response.data);
+                    $scope.getPhotos();
+                }, function (error) {
+                    alert(error);
+                });
+            }
+
+            // Elimina foto del lisatdo de fotos del producto
+            $scope.onClickRemovePhoto = function (photo) {
+                $scope.brand.photos = $scope.brand.photos.filter(function (p) {
+                    return p != photo;
+                });
+            };
+
+        });
+
+        var myApp;
+        $(document).ready(function () {
+
+            myApp = myApp || (function () {
+                var pleaseWaitDiv = $(
+                    '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+                    '<div class="modal-dialog modal-m">' +
+                    '<div class="modal-content">' +
+                    '<div class="modal-header"><h3 style="margin:0;">Processing...</h3></div>' +
+                    '<div class="modal-body">' +
+                    '<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
+                    '</div>' +
+                    '</div></div></div>');
+                return {
+                    showPleaseWait: function () {
+                        pleaseWaitDiv.modal();
+                    },
+                    hidePleaseWait: function () {
+                        pleaseWaitDiv.modal('hide');
+                    },
+                };
+            })();
+
+        });
+
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
