@@ -180,6 +180,9 @@
 
         app.controller('myCtrl', function ($scope, $http) {
 
+            var url = new URL(window.location.href);
+            $scope.store = url.searchParams.get("store").replace("'", "").replace("'", "");
+
             $scope.categories = undefined;
             $scope.category = undefined;
             $scope.isUpdate = false;
@@ -187,7 +190,9 @@
             $scope.selectedPhoto = 'empty-img.png';
             document.getElementById("register").hidden = true;
 
-            $scope.getAll();
+            $scope.init = function () {
+                $scope.getAll();
+            }
 
             $scope.delete = function (id_category) {
                 bootbox.confirm("Seguro que desea eliminar la categoria?", function (result) {
@@ -326,6 +331,9 @@
                     return p != photo;
                 });
             };
+
+            // Inicializar datos
+            $scope.init();
 
         });
 
