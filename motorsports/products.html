@@ -11,19 +11,39 @@
     <link rel="stylesheet" href="resources/lib/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <style>
+        @media screen and (max-width: 2000px) {
+            body {
+                font-size: 16px;
+            }
+
+            .img-product {
+                width: 115px;
+                height: 125px;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            body {
+                font-size: 10px;
+            }
+
+            .img-product {
+                width: 50px;
+                height: 55px
+            }
+        }
         /* Remove the navbars default rounded borders and increase the bottom margin */
-        
+
         .navbar {
-            margin-bottom: 50px;
             border-radius: 0;
         }
         /* Remove the jumbotrons default bottom margin */
-        
+
         .jumbotron {
             margin-bottom: 0;
         }
         /* Add a gray background color and some padding to the footer */
-        
+
         footer {
             background-color: #f2f2f2;
             padding: 25px;
@@ -31,7 +51,7 @@
         /* IMAGEN DETALLE */
         /* The Modal (background) */
         /* The Close Button */
-        
+
         .close {
             color: white;
             position: absolute;
@@ -40,37 +60,37 @@
             font-size: 35px;
             font-weight: bold;
         }
-        
+
         .close:hover,
         .close:focus {
             color: #999;
             text-decoration: none;
             cursor: pointer;
         }
-        
+
         .cursor {
             cursor: pointer
         }
-        
+
         .active,
         .demo:hover {
             opacity: 1;
         }
-        
+
         img.hover-shadow {
             transition: 0.3s
         }
-        
+
         .hover-shadow:hover {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
         }
-        
+
         .list-product-name {
             text-decoration: underline;
             color: #337ab7;
             cursor: pointer
         }
-        
+
         .text_truncate {
             display: -webkit-box;
             max-width: 90%;
@@ -91,7 +111,7 @@
 <body>
     <div ng-app="myApp" ng-controller="myCtrl">
 
-        <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 0px !important;">
+        <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -120,8 +140,7 @@
         </nav>
 
 
-        <div class="container" style="margin-top:52px; width:100%">
-
+        <div class="container" style="width:100%">
             <div class="row">
 
                 <div class="col-sm-2 sidenav" style="padding-right: 0px; padding-left: 10px;">
@@ -141,13 +160,8 @@
                                         <col width="10%">
                                         <col width="80%">
                                         <col width="10%">
-                                        <tr>
-                                            <td><input type="radio" value="0" name="categoriesRadio"></td>
-                                            <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">All</td>
-                                            <td><span class="badge" style="float: right;">{{totalProducts}}</span></td>
-                                        </tr>
-                                        <tr ng-repeat="category in categories">
-                                            <td><input type="radio" value="{{category.id_cto_product_category}}" name="categoriesRadio"></td>
+                                        <tr ng-repeat="category in allCategories" ng-hide="!category.count > 0">
+                                            <td><input type="checkbox" ng-model="category.checked" ng-click="updateProducts()"></td>
                                             <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{category.description}}</td>
                                             <td><span class="badge" style="float: right;">{{category.count}}</span></td>
                                         </tr>
@@ -171,13 +185,8 @@
                                         <col width="10%">
                                         <col width="80%">
                                         <col width="10%">
-                                        <tr>
-                                            <td><input type="radio" value="0" name="brandsRadio"></td>
-                                            <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">All</td>
-                                            <td><span class="badge" style="float: right;">{{totalProducts}}</span></td>
-                                        </tr>
-                                        <tr ng-repeat="brand in brands">
-                                            <td><input type="radio" value="{{brand.id_cto_brand}}" name="brandsRadio"></td>
+                                        <tr ng-repeat="brand in allBrands" ng-hide="!brand.count > 0">
+                                            <td><input type="checkbox" ng-model="brand.checked" ng-click="updateProducts()"></td>
                                             <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{brand.description}}</td>
                                             <td><span class="badge" style="float: right;">{{brand.count}}</span></td>
                                         </tr>
@@ -187,168 +196,123 @@
                             </div>
                         </div>
 
-
-                        <input type="text" class="form-control" placeholder="Find by text..." style="margin-top: 10px;">
-
-
-                        <button type="button" class="btn btn-primary btn-block" ng-click="onSearchFilters()" style="margin-top: 10px;">Search</button>
-
                     </div>
                 </div>
 
                 <div class="col-sm-10 text-left">
                     <div class="container" style="width: 100%;" ng-cloak>
 
-                        <div class="panel panel-default" style="border: solid 1px #337ab7;  margin: 5px 5px 5px -10px;">
-                            <div class="panel-body">
-                                <div class="row">
+                        <div class="row">
 
-                                    <div class="col-sm-4">
-                                        Sort By
+                            <center>
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    <div class="form-group">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><label for="selectSort">Sort by</label></td>
+                                                <td><select class="form-control" id="selectSort" ng-model="sort" ng-change="updateProducts()">
+                                                    <option value="price_asc">Price Low to Height</option>
+                                                    <option value="price_desc">Price Height to Low</option>
+                                                  </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+
                                     </div>
-                                    <div class="col-sm-8">
+                                </div>
 
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-center pagination-sm " style="margin: auto;">
-                                                <li class="page-item" ng-click="onClickPage(currentPage - 1)">
-                                                    <span class="page-link" aria-label="Previous" style="cursor: pointer;">
+                                <div class="col-lg-6 col-sm-6 col-xs-6">
+
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center pagination-sm " style="margin: auto;">
+                                            <li class="page-item" ng-click="onClickPage(currentPage - 1)">
+                                                <span class="page-link" aria-label="Previous" style="cursor: pointer;">
                                                         <span aria-hidden="true">&laquo;</span>
-                                                    <span class="sr-only">Previous</span>
-                                                    </span>
-                                                </li>
-                                                <li class="page-item {{page.style}}" ng-repeat="page in pages" ng-click="onClickPage(page.page)">
-                                                    <span class="page-link" style="cursor: pointer;">{{page.page + 1}}</span>
-                                                </li>
-                                                <li class="page-item" ng-click="onClickPage(currentPage + 1)">
-                                                    <span class="page-link" aria-label="Next" style="cursor: pointer;">
+                                                <span class="sr-only">Previous</span>
+                                                </span>
+                                            </li>
+                                            <li class="page-item {{page.style}}" ng-repeat="page in pages" ng-click="onClickPage(page.page)">
+                                                <span class="page-link" style="cursor: pointer;">{{page.page + 1}}</span>
+                                            </li>
+                                            <li class="page-item" ng-click="onClickPage(currentPage + 1)">
+                                                <span class="page-link" aria-label="Next" style="cursor: pointer;">
                                                         <span aria-hidden="true">&raquo;</span>
-                                                    <span class="sr-only">Next</span>
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </nav>
-
-                                    </div>
-
-                                    <!--<div class="col-sm-4">
-                                        ddd
-                                    </div>
--->
+                                                <span class="sr-only">Next</span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </div>
-                            </div>
+
+                                <div class="col-lg-3 col-sm-3 col-xs-3">
+                                    All Items ({{totalProducts}})
+                                </div>
+
+                            </center>
+
                         </div>
 
+                        <div class="row" style="border-top: solid 1px black;">
 
-                        <div class="row" style="height: 700px; overflow-y: auto;">
-                            <div class="col-lg-3 col-sm-3 col-xs-6 filter {{p.category_name}}  {{p.brand_name}}" ng-repeat="p in products" style="padding-right: 5px;padding-left: 5px;">
-                                <div class="panel panel-primary">
-                                    <div class="panel-body">
-                                        <center>
-                                            <img ng-if="p.photos.length > 0" src="data:{{p.photos[0].filetype}};base64,{{p.photos[0].base64}}" class=" rounded" style="height:150px !important; width:130px;"
-                                                alt="product">
-                                            <img ng-if="p.photos.length == 0" src="resources/img/products/empty-img.png" class=" rounded" style="height:150px !important; width:130px;"
-                                                alt="product">
-                                        </center>
-                                    </div>
-                                    <div class="panel-footer" style="font-size:xx-small; height: 80px;">
-                                        <h6 class="list-product-name" style="text-align: center;" ng-click="onClickProductView(p)" data-toggle="modal" data-target="#productDetail"><b>{{p.name}}</b></h6>
-                                        <h6 ng-if="p.low_price == '0'" style="text-align: center;"><b>${{p.price}} </b></h6>
-                                        <h6 ng-if="p.low_price != '0'" style="text-align: center;"><b><strike>${{p.price}}</strike><span style="color: red"> ${{p.low_price}}</span> </b></h6>
-                                    </div>
-                                </div>
+                            <div class="col-sm-12">
+                                Filters
+                                <span class="badge badge-pill badge-default" ng-repeat="c in allCategories" ng-hide="! c.checked">
+                                        {{c.description}}
+                                        <i class="fa fa-times" aria-hidden="true" ng-click="onRemoveFilter('category',c)"></i>
+                                </span>
+
+                                <span class="badge badge-pill badge-default" ng-repeat="b in allBrands" ng-hide="!b.checked">
+                                    {{b.description}}
+                                    <i class="fa fa-times" aria-hidden="true" ng-click="onRemoveFilter('brand',b)"></i>
+                                </span>
+
                             </div>
+
                         </div>
 
-                    </div>
-                </div>
+                        <div class="row" style="height: 480px; overflow-y: auto;margin-top: 10px;">
 
-            </div>
-        </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" ng-repeat="p in paginatedProducts">
+                                    <div class="container" style="width: 100%;">
+                                        <div class="row">
 
-        <!-- Modal -->
-        <div class="modal fade" id="productDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLabel">
-                            <b>{{productDetail.name}}</b>
-                        </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                    </div>
-                    <div class="modal-body">
+                                            <div class="col-lg-2 col-sm-2 col-xs-2">
+                                                <img src="resources/img/products/{{p.photos[0]}}" class="rounded img-product" alt="{{p.name}}">
+                                            </div>
 
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <img id="productDetailImage" src="data:{{productDetail.photos[0].filetype}};base64,{{productDetail.photos[0].base64}}" style="width:100%"
-                                        onclick="openModal(); " class="hover-shadow cursor">
-                                </div>
-                                <div class="col-sm-8">
+                                            <div class="col-lg-8 col-sm-8 col-xs-8">
+                                                <b style="color: red;">{{p.name}}</b>
+                                                <br/> model : <b>{{p.part_number}}</b>
+                                                </br/>
+                                                <p/>
+                                                <p ng-bind-html="p.short_description"></p>
+                                            </div>
 
-                                    <p ng-bind-html="productDetail.short_description"></p>
-
-                                    <div class="panel panel-default">
-                                        <div class="panel-body" style="margin-bottom: 0px">
-
-                                            <div class="row">
-                                                <div class="col-sm-4 col-lg-4 col-xs-4">
-                                                    <h6 ng-if="productDetail.low_price == '0'" style="text-align: center;">Price: <b>${{productDetail.price}} </b></h6>
-                                                    <h6 ng-if="productDetail.low_price != '0'" style="text-align: center;">Price: <b><strike>${{productDetail.price}}</strike><span style="color: red"> ${{productDetail.low_price}}</span> </b></h6>
-                                                </div>
-                                                <div class="col-sm-8 col-lg-8 col-xs-8">
-                                                    <span ng-if="productDetail.stock > 0" class="text-success" style="float: right;"><b>In stock</b></span>
-                                                    <div class="send-message-facebook" data-dismiss="modal">
-                                                        <span ng-if="productDetail.stock < 1" class="text-danger" style="cursor: pointer; float: right;"><u><b>Please check availability.</b></u></span>
+                                            <div class="col-lg-2 col-sm-2 col-xs-2">
+                                                <center>
+                                                    <kbd ng-if="p.low_price == '0'">${{p.price}}</kbd>
+                                                    <div ng-if="p.low_price != '0'">
+                                                        <kbd><strike>${{p.price}}</strike></kbd><br/>
+                                                        <b><span style="color: red"> ${{p.low_price}}</span></b>
                                                     </div>
-                                                </div>
+
+                                                    <button style="float: right;" type="button" class="btn btn-danger btn-sm" ng-click="clickAddToCart(p)">ADD TO CART</button>
+                                                </center>
                                             </div>
 
-                                            <p/>
-
-                                            <div class="row">
-                                                <div class="col-sm-4 col-lg-4 col-xs-4">
-                                                    <input type="text" class="form-control" value="{{productQuantity}}" disabled style="width:100%;">
-                                                </div>
-                                                <div class="col-sm-2 col-lg-2 col-xs-2" style="display:inline-flex">
-                                                    <button type="button" class="btn btn-default btn-sm" ng-click="onClickAddProduct(productDetail)" ng-disabled="productDetail.stock < 1">
-                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                                    </button> &nbsp;
-                                                    <button type="button" class="btn btn-default btn-sm" ng-click="onClickRemoveProduct()" ng-disabled="productDetail.stock < 1">
-                                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                                    </button>
-                                                </div>
-                                                <div class="col-sm-6 col-lg-6 col-xs-6">
-                                                    <button style="float: right;" type="button" class="btn btn-danger btn-sm" ng-click="clickAddToCart(productDetail)" ng-disabled="productDetail.stock < 1">ADD TO CART</button>
-                                                </div>
-                                            </div>
-                                            <div id="id-message-stock" class="alert alert-warning" style="margin-top: 20px; margin-bottom: 0px !important;" hidden>
-                                                <!--<strong>Warning!</strong> {{productQuantity}} is the maximum order number
-                                                for this product.-->
-                                                <div class="send-message-facebook" data-dismiss="modal" style="cursor: pointer">
-                                                    <u>Please check availability. </u>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" ng-click="onClickProductViewDetail(productDetail)">View detail</button>
-                            </div>
+                                </li>
+                            </ul>
 
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
-
-
 
     </div>
 
@@ -360,7 +324,7 @@
             right: 24px;
             cursor: pointer
         }
-        
+
         .fb-widget {
             background: #fff;
             z-index: 2;
@@ -377,12 +341,12 @@
             -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
             -o-box-shadow: 0 5px 40px rgba(0, 0, 0, .16)
         }
-        
+
         .fb-credit {
             text-align: center;
             margin-top: 8px
         }
-        
+
         .fb-credit a {
             transition: none;
             color: #bec2c9;
@@ -392,7 +356,7 @@
             border: 0;
             font-weight: 400
         }
-        
+
         .ctrlq.fb-overlay {
             z-index: 0;
             position: fixed;
@@ -404,7 +368,7 @@
             left: 0;
             background: rgba(0, 0, 0, .05);
         }
-        
+
         .ctrlq.fb-close {
             z-index: 4;
             padding: 0 6px;
@@ -415,7 +379,7 @@
             margin: 8px;
             border-radius: 3px;
         }
-        
+
         .ctrlq.fb-close::after {
             content: 'x';
             font-family: sans-serif;
@@ -444,145 +408,122 @@
         app.controller('myCtrl', function ($scope, $http) {
 
             //Variables
-            $scope.products = [];
-            $scope.categories = [];
-            $scope.brands = [];
+            $scope.allProducts = []; // All bd products
+            $scope.products = []; // filtered prodcuts (category, brands, etc)
+            $scope.paginatedProducts = []; // paginated products
             $scope.productsByPage = 20;
             $scope.currentPage = 0;
+            $scope.sort = "price_asc";
 
             if (!sessionStorage.getItem("cart")) {
                 sessionStorage.setItem("cart", '[]');
             }
 
             $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
-            $scope.productDetail = undefined;
-            $scope.productQuantity = undefined; //Cantidad de productos encargados
-
 
 
             //Functions
+            $scope.loadProducts = function () {
 
-            $scope.loadAllProducts = function () {
-
-                var category = "all"
-                    , brand = "all";
-
-                var categoriesRadio = document.getElementsByName('categoriesRadio');
-                for (i = 0; i < categoriesRadio.length; i++) {
-                    if (categoriesRadio[i].checked) {
-                        category = categoriesRadio[i].value  != "0" ? categoriesRadio[i].value : "all";
-                        break;
-                    }
-                }
-
-                var brandsRadio = document.getElementsByName('brandsRadio');
-                for (i = 0; i < brandsRadio.length; i++) {
-                    if (brandsRadio[i].checked) {
-                        brand = brandsRadio[i].value != "0" ? brandsRadio[i].value : "all";
-                        break;
-                    }
-                }
-
-                $http.get(`backend/bd_products.php?data=allProducts&category=${category}&brand=${brand}`).then(function (response) {
-
-                    var products = response.data;
-
-                    // Obtiene todas las categorias y brands dentro de la consulta general
-                    $scope.categories = [];
-                    $scope.brands = [];
-                    products.forEach(function (product) {
-
-                        // Categories
-                        var include = $scope.categories.some(function (category) {
-                            return category.id_cto_product_category == product.id_cto_product_category;
-                        });
-
-                        if (!include) {
-
-                            var category = $scope.allCategories.find(function (category) {
-                                return product.id_cto_product_category == category.id_cto_product_category;
-                            });
-
-                            category.count = 1;
-
-                            $scope.categories.push(category);
-                        } else {
-                            $scope.categories = $scope.categories.map(function (category) {
-                                if (category.id_cto_product_category == product.id_cto_product_category) {
-                                    category.count = category.count + 1;
-                                }
-                                return category;
-                            });
-                        }
-
-                        // Brands
-                        var include = $scope.brands.some(function (brand) {
-                            return brand.id_cto_brand == product.id_cto_brand;
-                        });
-
-                        if (!include) {
-
-                            var brand = $scope.allBrands.find(function (brand) {
-                                return product.id_cto_brand == brand.id_cto_brand;
-                            });
-
-                            brand.count = 1;
-                            brand.checked = true;
-
-                            $scope.brands.push(brand);
-                        } else {
-                            $scope.brands = $scope.brands.map(function (brand) {
-                                if (brand.id_cto_brand == product.id_cto_brand) {
-                                    brand.count = brand.count + 1;
-                                }
-                                return brand;
-                            });
-                        }
-                    });
-
-
-                    $scope.totalProducts = products.length;
-                    $scope.pages = [];
-
-                    for (var x = 0; x < Math.ceil(($scope.totalProducts / $scope.productsByPage)); x++) {
-                        $scope.pages.push({
-                            page: x,
-                            style: x == 0 ? "active" : ""
-                        });
-                    }
-
+                $http.get(`backend/bd_products.php?data=allProducts`).then(function (response) {
+                    $scope.allProducts = response.data;
+                    $scope.updateProducts();
                 });
             }
 
+            $scope.updateProducts = function () {
 
-            $scope.loadPaginatedProducts = function (currentPage) {
-
-                var category = "all"
-                    , brand = "all";
-
-                var categoriesRadio = document.getElementsByName('categoriesRadio');
-                for (i = 0; i < categoriesRadio.length; i++) {
-                    if (categoriesRadio[i].checked) {
-                        category = categoriesRadio[i].value;
-                        break;
-                    }
-                }
-
-                var brandsRadio = document.getElementsByName('brandsRadio');
-                for (i = 0; i < brandsRadio.length; i++) {
-                    if (brandsRadio[i].checked) {
-                        brand = brandsRadio[i].value;
-                        break;
-                    }
-                }
-
-                var request = `backend/bd_products.php?data=paginatedProducts&productsByPage=${$scope.productsByPage}&currentPage=${currentPage}&category=${category}&brand=${brand}`;
-
-                $http.get(request).then(function (response) {
-
-                    $scope.products = response.data;
-
+                // Get filters
+                var categories = $scope.allCategories.filter(function (item) {
+                    return item.checked == true;
+                }).map(function (item) {
+                    return parseInt(item.id_cto_product_category);
                 });
+                var brands = $scope.allBrands.filter(function (item) {
+                    return item.checked == true;
+                }).map(function (item) {
+                    return parseInt(item.id_cto_brand);
+                });
+
+                // Reset filters
+                $scope.allBrands = $scope.allBrands.map(function (brand) {
+                    brand.count = 0;
+                    return brand;
+                });
+                $scope.allCategories = $scope.allCategories.map(function (category) {
+                    category.count = 0;
+                    return category;
+                });
+
+                // update filters
+                $scope.allProducts.filter(function (product) {
+                    return categories.includes(product.id_cto_product_category) || categories.length == 0;
+                }).forEach(function (product) {
+
+                    $scope.allBrands = $scope.allBrands.map(function (brand) {
+                        if (brand.id_cto_brand == product.id_cto_brand) {
+                            brand.count = brand.count + 1;
+                        }
+                        return brand;
+                    });
+                });
+                $scope.allProducts.filter(function (product) {
+                    return brands.includes(product.id_cto_brand) || brands.length == 0;
+                }).forEach(function (product) {
+
+                    $scope.allCategories = $scope.allCategories.map(function (category) {
+                        if (category.id_cto_product_category == product.id_cto_product_category) {
+                            category.count = category.count + 1;
+                        }
+                        return category;
+                    });
+                });
+
+                // Update products
+                $scope.products = $scope.allProducts.filter(function (product) {
+                    return (brands.includes(product.id_cto_brand) || brands.length == 0) && (categories.includes(product.id_cto_product_category) || categories.length == 0);
+                });
+
+                $scope.totalProducts = $scope.products.length;
+                $scope.pages = [];
+
+                // add array pages
+                for (var x = 0; x < Math.ceil(($scope.totalProducts / $scope.productsByPage)); x++) {
+                    $scope.pages.push({
+                        page: x,
+                        style: x == 0 ? "active" : ""
+                    });
+                }
+
+                // Sort
+                $scope.products = $scope.sortProducts($scope.products);
+
+                // Update paginated products (first page)
+                $scope.paginatedProducts = $scope.products.slice(0, $scope.productsByPage);
+            }
+
+            $scope.sortProducts = function (products) {
+
+                var result = [];
+
+                switch ($scope.sort) {
+                    case 'price_asc':
+
+                        result = products.sort(function (a, b) {
+                            return ((parseInt(a.low_price) > 0) ? parseInt(a.low_price) : parseFloat(a.price)) - ((parseInt(b.low_price) > 0) ? parseInt(b.low_price) : parseFloat(b.price));
+                        });
+
+                        break;
+                    case 'price_desc':
+
+                        result = products.sort(function (a, b) {
+                            return ((parseInt(b.low_price) > 0) ? parseInt(b.low_price) : parseFloat(b.price)) - ((parseInt(a.low_price) > 0) ? parseInt(a.low_price) : parseFloat(a.price));
+                        });
+
+                        break;
+                }
+
+                return result;
             }
 
 
@@ -607,22 +548,16 @@
                     }
                 });
 
-                $scope.loadPaginatedProducts(page);
+                $scope.paginatedProducts = $scope.products.slice($scope.currentPage * $scope.productsByPage, ($scope.currentPage + 1) * $scope.productsByPage);
 
             }
-
-            $scope.onSearchFilters = function () {
-                $scope.loadPaginatedProducts(0);
-                $scope.loadAllProducts();
-            }
-
 
             $scope.clickAddToCart = function (product) {
 
                 delete product.$$hashKey;
 
                 var cartList = JSON.parse(sessionStorage.getItem("cart"));
-                product.quantity = $scope.productQuantity;
+                product.quantity = 1;
 
                 //verificar si ya existe
                 var productIndex = cartList.findIndex(function (item) {
@@ -651,54 +586,46 @@
                                 size: 'small'
                             });
                         } else {
-                            document.getElementById("id-message-stock").hidden = false;
+                            bootbox.confirm('"' + product.name + '" Please check availability. ?', function (isOk) {
+                                if (isOk) {
+                                    $(".fb-widget").show().animate({ bottom: "30px", opacity: 1 }, 2 * 125);
+                                }
+                            });
                         }
                     });
 
-            }
-
-            $scope.onClickProductView = function (product) {
-                // consulta por id;
-
-                $http.get("backend/bd_products.php?data=productoDetalle&productId=" + product.id_product)
-                    .then(function (response) {
-                        $scope.productDetail = response.data[0];;
-                        $scope.productQuantity = 1;
-                        document.getElementById("id-message-stock").hidden = true;
-                    });
-
-
-            }
-
-            $scope.onClickAddProduct = function (product) {
-
-                $http.get("backend/bd_products.php?data=productStock&id_product=" + product.id_product)
-                    .then(function (response) {
-
-                        var stock = parseInt(response.data);
-
-                        if ($scope.productQuantity < stock) {
-                            $scope.productQuantity++;
-                        } else {
-                            document.getElementById("id-message-stock").hidden = false;
-                        }
-
-                    });
-            }
-
-            $scope.onClickRemoveProduct = function () {
-                if ($scope.productQuantity > 1) {
-                    $scope.productQuantity--;
-                }
-
-                document.getElementById("id-message-stock").hidden = true;
             }
 
             $scope.onClickProductViewDetail = function (product) {
                 window.location.href = "http://motorsports.innopartserv.com/product.html?product=" + product.id_product;
             }
 
+            $scope.onRemoveFilter = function (type, filter) {
 
+                switch (type) {
+                    case 'category':
+                        $scope.allCategories = $scope.allCategories.map(function (category) {
+                            if (category.id_cto_product_category == filter.id_cto_product_category) {
+                                category.checked = false;
+                            }
+                            return category;
+                        });
+                        break;
+
+                    case 'brand':
+
+                        $scope.allBrands = $scope.allBrands.map(function (brand) {
+                            if (brand.id_cto_brand == filter.id_cto_brand) {
+                                brand.checked = false;
+                            }
+                            return brand;
+                        });
+
+                        break;
+                }
+
+                $scope.updateProducts();
+            }
 
             // Iniciarlizar data
             $http.get("backend/bd_products.php?data=categoria")
@@ -709,9 +636,7 @@
                         .then(function (response) {
                             $scope.allBrands = response.data;
 
-                            $scope.loadPaginatedProducts(0);
-                            $scope.loadAllProducts();
-
+                            $scope.loadProducts();
                         });
                 });
 
@@ -724,55 +649,6 @@
                 $(".fb-widget").hide("slow");
             });
 
-            $(".send-message-facebook").on("click", function (e) {
-                $(".fb-widget").show().animate({ bottom: "30px", opacity: 1 }, 2 * 125);
-                $("._58an").focus();
-            });
-
-            $('body').on('change', '.filter-product', function () {
-
-                /*var filterCategory = "." + document.getElementById("filter-category").value;
-                var filterBrand = "." + document.getElementById("filter-brand").value;
-
-                if (filterCategory == ".all" && filterBrand == ".all") {
-                    $('.filter').show('1000');
-                } else {
-                    if (filterCategory == ".all") {
-                        filterCategory = "";
-                    }
-                    if (filterBrand == ".all") {
-                        filterBrand = "";
-                    }
-                    $(".filter").not(filterCategory + filterBrand).hide('3000');
-                    $('.filter' + filterCategory + filterBrand).show('3000');
-                }*/
-            });
-
-            // Esperar a que angular carge todas las marcas.
-            /*setTimeout(function () {
-
-                var reg = new RegExp('[?&]brand=([^&#]*)', 'i');
-                var string = reg.exec(window.location.href);
-
-                document.getElementById("filter-brand").value = string ? string[1] : "all";
-
-                var filterCategory = ".all"
-                var filterBrand = string ? "." + string[1] : ".all"
-
-                if (filterCategory == ".all" && filterBrand == ".all") {
-                    $('.filter').show('1000');
-                } else {
-                    if (filterCategory == ".all") {
-                        filterCategory = "";
-                    }
-                    if (filterBrand == ".all") {
-                        filterBrand = "";
-                    }
-                    $(".filter").not(filterCategory + filterBrand).hide('3000');
-                    $('.filter' + filterCategory + filterBrand).show('3000');
-                }
-
-            }, 500);*/
         });
 
 
@@ -788,7 +664,6 @@
             document.getElementById('productDetail').style.display = "block";
         }
     </script>
-
 
 </body>
 

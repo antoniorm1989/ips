@@ -150,8 +150,6 @@ if($data == "getProductById"){
 	
 	
 	
-	
-	
 	if($data == "update"){
 	
 	   try {
