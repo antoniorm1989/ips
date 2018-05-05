@@ -10,26 +10,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-
-    <!-- text editor -->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-
-    <!--<script src="../motorsports/resources/lib/boostrap/bootbox.min.js"></script>-->
-
     <title>IPS Admon</title>
 </head>
 
 <body style="background-color: gainsboro">
 
-    <div ng-app="myApp" ng-controller="myCtrl">
+    <div id="myCtrl" ng-app="myApp" ng-controller="myCtrl">
 
         <div id="list-products">
             <h2>Product list</h2>
-            <button class="btn btn-success" ng-click="create()">New</button>
 
-            <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: right;width: 30%; margin-right: 20px;">
+            <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: left;width: 30%; margin-right: 20px;">
+            <button class="btn btn-success" ng-click="create()"  style="float: right; margin-right: 20px;">New</button>
+            <a href="index.html" class="btn btn-link" style="float: right; margin-right: 20px;">Back</a>
 
             <table class="table table-striped table-hover table-condensed table-responsive">
                 <thead>
@@ -61,12 +54,8 @@
                         <td>{{ p.id_brand}}</td>
                         <td>{{ p.id_category}}</td>
                         <td>
-                            <button class="btn btn-danger" ng-click="delete(p.id_product)">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </button>
-                            <button class="btn btn-info" ng-click="update(p.id_product)">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </button>
+                            <button class="btn btn-danger" type="button" ng-click="delete(p.id_product)">Delete</button>
+                            <button class="btn btn-info" type="button" ng-click="update(p.id_product)">Edit</button>
                         </td>
                     </tr>
                 </tbody>
@@ -158,9 +147,7 @@
                         </th>
                         <td>{{photo}}</td>
                         <td>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="onClickRemovePhoto(photo)">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
+                            <button type="button" class="btn btn-dark btn-sm" ng-click="onClickRemovePhoto(photo)">Delete</button>
                         </td>
                     </tr>
                     <tr>
@@ -175,7 +162,7 @@
             </div>
 
             <center>
-                <button class="btn btn-default" ng-click="back()">Back</button>
+                <button class="btn btn-secondary" ng-click="back()">Back</button>
                 <button class="btn btn-primary" ng-click="save()">Save</button>
             </center>
             <p/>
@@ -252,10 +239,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+    <!-- text editor -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
     <script>
-
         var app = angular.module('myApp', []);
-
         app.controller('myCtrl', function ($scope, $http) {
 
             var url = new URL(window.location.href);
@@ -283,7 +276,7 @@
                     if (result) {
                         $http({
                             method: 'POST',
-                            url: $scope.serverPath + 'data_base.php?data=delete',
+                            url: $scope.serverPath + 'data_base.php?data=delete&store=' + $scope.store,
                             data: { id_product: id_product }
                         }).then(function successCallback(response) {
                             alert("El producto se ha borrado.");
@@ -341,7 +334,7 @@
 
             $scope.save = function () {
                 myApp.showPleaseWait();
-                $scope.product.photosJson = JSON.stringify($scope.product.photos);
+                $scope.product.photosJson = $scope.product.photos.length > 0 ? JSON.stringify($scope.product.photos) : '["empty-img.png"]';
                 $scope.product.name = $scope.product.name.replace(new RegExp('\r?\n', 'g'), '<br />');
                 $scope.product.short_description = $('.summernote').eq(0).summernote('code'); //$scope.product.short_description.replace(new RegExp('\r?\n', 'g'), '<br />');
                 $scope.product.description = $('.summernote').eq(1).summernote('code') //$scope.product.description.replace(new RegExp('\r?\n', 'g'), '<br />');
@@ -428,7 +421,7 @@
             // Obtiene las fotos disponibles del server
             $scope.getPhotos = function () {
                 $scope.selectedPhoto = 'empty-img.png';
-                $http.get($scope.serverPath + "upload.php/?data=getFilesServer&store=motorsport")
+                $http.get($scope.serverPath + "upload.php/?data=getFilesServer&store=motorsport&process=product")
                     .then(function (response) {
                         response.data.shift(); // removemos los primeros dos "." y ".."
                         response.data.shift();
@@ -445,11 +438,11 @@
                 formData.append('file', files, files.name);
                 $http({
                     method: 'POST',
-                    url: $scope.serverPath + 'upload.php/?data=uploadFile&store=motorsport',
+                    url: $scope.serverPath + 'upload.php/?data=uploadFile&store=motorsport&process=product',
                     data: formData,
                     headers: { 'Content-Type': undefined },
                 }).then(function (response) {
-                    console.log(response.data);
+                    alert(response.data);
                     $scope.getPhotos();
                 }, function (error) {
                     alert('status: ' + error.status);
@@ -462,10 +455,6 @@
                     return p != photo;
                 });
             };
-
-            // Inicializar datos
-            $scope.init();
-
         });
 
         var myApp;
@@ -490,13 +479,16 @@
                         pleaseWaitDiv.modal();
                     },
                     hidePleaseWait: function () {
-                        pleaseWaitDiv.modal('hide');
+                        pleaseWaitDiv.on('shown.bs.modal', function (e) {
+                            pleaseWaitDiv.modal("hide");
+                        });
+                        pleaseWaitDiv.modal("hide");
                     },
                 };
             })();
 
+            angular.element(document.getElementById('myCtrl')).scope().init();
         });
-
     </script>
 
 

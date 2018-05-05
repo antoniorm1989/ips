@@ -8,13 +8,6 @@ switch ($_GET["process"]) {
 	$target_dir = "../motorsports/resources/img/products/";
 	}
         break;
-    case "category":
-	if($_GET["store"] == 'motorsport'){
-	$target_dir = "../motorsports/resources/img/categories/";
-	}else{
-	$target_dir = "../motorsports/resources/img/categories/";
-	}
-        break;
     case "brand":
         if($_GET["store"] == 'motorsport'){
 	$target_dir = "../motorsports/resources/img/brands/";
@@ -79,7 +72,7 @@ if($data == "uploadFile"){
     } else {
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
         // echo "The file ". basename( $_FILES["file"]["name"]). " has been uploaded.";
-            echo "{\"name\":\"". basename( $_FILES["file"]["name"]). "\"}";
+            echo "Upload photo ".basename( $_FILES["file"]["name"])." succesfull";
         } else {
             echo "Sorry, there was an error uploading your file.";
         }

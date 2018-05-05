@@ -21,25 +21,25 @@
 
         <div id="login" style="width: 50%; margin: 50px auto;">
             <form ng-submit="login()">
-                <div class="form-group">
-                    <select class="form-control" ng-model="store">
-                        <option value="motorsport">Motor sports</option>
+                <center>
+                    <h3> Choose Store</h3>
+                    <div class="form-group">
+                        <select class="form-control" ng-model="store">
+                        <option value="motorsport">Motor Sports</option>
                         <option value="agricultural">Agricultural</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email address:</label>
-                    <input type="email" class="form-control" id="email" ng-model="user">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" class="form-control" id="pwd" ng-model="pass">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </center>
             </form>
         </div>
 
-        <div id="seleccionProceso" class="container" style="width: 100%; margin-top:10%;" hidden>
+        <div id="catSelection" class="container" style="width: 100%; margin-top:10%;" hidden>
+            <center>
+                <h3 ng-hide="store == 'agricultural'"> Motor Sports Store</h3>
+                <h3 ng-hide="store == 'motorsport'"> Agricultural Store</h3>
+            </center>
+            <p/>
             <div class="row">
                 <div class="col-lg-4 col-sm-4 col-xs-4" style="margin-bottom:20px">
                     <div class="card" style="height:180px;">
@@ -55,7 +55,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Categories</h5>
                             <p class="card-text">Adminsitra tus categorias para dar de alta productos.</p>
-                            <a href="category.html?store={{store}}" class="btn btn-primary" style="float: right;">Go</a>
+                            <a href="category.html?store={{store}}" class="btn btn-primary" style="float: right;" disabled>Go</a>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Brands</h5>
                             <p class="card-text">Administra tus brands para dar de alta productos.</p>
-                            <a href="brand.html?store={{store}}" class="btn btn-primary" style="float: right;">Go</a>
+                            <a href="brand.html?store={{store}}" class="btn btn-primary" style="float: right;" disabled>Go</a>
                         </div>
                     </div>
                 </div>
@@ -83,22 +83,18 @@
         crossorigin="anonymous"></script>
 
     <script>
-
         var app = angular.module('myApp', []);
 
         app.controller('myCtrl', function ($scope, $http) {
 
-            $scope.user = "mrios@innopartserv.com";
-            $scope.pass = "123456";
             $scope.store = "motorsport";
 
             $scope.login = function () {
                 document.getElementById("login").hidden = true;
-                document.getElementById('seleccionProceso').hidden = false;
+                document.getElementById('catSelection').hidden = false;
             }
 
         });
-
     </script>
 
 

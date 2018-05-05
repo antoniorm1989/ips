@@ -116,10 +116,10 @@
                                 <div class="col-sm-4 col-lg-4 col-xs-12">
 
                                     <center>
-                                        <img id="mainImage" height="300" width="300" src="data:{{product.photos[0].filetype}};base64,{{product.photos[0].base64}}"
+                                        <img id="mainImage" height="300" width="300" src="resources/img/products/{{product.photos[0]}}"
                                         />
                                         <br/>
-                                        <img style="margin: 10px;" ng-repeat="photo in product.photos" ng-click="changeImage(photo)" height="50" width="50" src="data:{{photo.filetype}};base64,{{photo.base64}}"
+                                        <img style="margin: 10px;" ng-repeat="photo in product.photos" ng-click="changeImage(photo)" height="50" width="50" src="resources/img/products/{{product.photos[0]}}"
                                         />
                                     </center>
 
@@ -314,7 +314,7 @@
             var reg = new RegExp('[?&]product=([^&#]*)', 'i');
             var productUrl = reg.exec(window.location.href);
 
-            $http.get("bd_products.php?data=productoDetalle&productId=" + productUrl[1])
+            $http.get("backend/bd_products.php?data=productoDetalle&productId=" + productUrl[1])
                 .then(function (response) {
                     $scope.product = response.data[0];
                     $scope.productQuantity = 1;
@@ -340,7 +340,7 @@
                     product = cartList[productIndex];
                 }
 
-                $http.get("bd_products.php?data=productStock&id_product=" + product.id_product)
+                $http.get("backend/bd_products.php?data=productStock&id_product=" + product.id_product)
                     .then(function (response) {
 
                         var stock = parseInt(response.data);
@@ -366,7 +366,7 @@
 
             $scope.onClickAddProduct = function (product) {
 
-                $http.get("bd_products.php?data=productStock&id_product=" + product.id_product)
+                $http.get("backend/bd_products.php?data=productStock&id_product=" + product.id_product)
                     .then(function (response) {
 
                         var stock = parseInt(response.data);
@@ -389,7 +389,7 @@
             }
 
             $scope.changeImage = function (photo) {
-                document.getElementById('mainImage').src = 'data:' + photo.filetype + ';base64,' + photo.base64;
+                document.getElementById('mainImage').src = 'resources/img/products/' + photo;
             }
 
         });

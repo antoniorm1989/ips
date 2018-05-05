@@ -19,23 +19,22 @@
             margin-bottom: 0px !important;
             border-radius: 0;
         }
-        
+
         body,
         html {
             height: 70%;
             background-color: #eee;
         }
-        
+
         .carousel-inner>.item>img,
         .carousel-inner>.item>a>img {
-            width: 70%;
             margin: auto;
         }
-        
+
         .footer {
             color: black
         }
-        
+
         .active {
             display: flex !important;
         }
@@ -45,10 +44,10 @@
 <body ng-app="myApp" ng-controller="myCtrl">
 
 
-    <div class="jumbotron" style="padding: 0px; margin: 0px;">
+    <div class="jumbotron" style="padding: 0px;margin: 0px;background-image: url(resources/img/banner.png);background-repeat: no-repeat, repeat;background-size: cover;">
         <div class="container text-center">
             <center>
-                <img src="resources/img/logo_nuevo.PNG" class="img-responsive img-rounded" alt="logo" style="width: 20%;">
+                <img src="resources/img/logo_nuevo.PNG" class="img-responsive img-rounded" alt="logo" style="width: 20%;float: left;">
             </center>
         </div>
     </div>
@@ -58,10 +57,10 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
                 <a class="navbar-brand" href="#">
                     <img alt="Brand" src="resources/img/logo_nuevo.PNG" class="img-circle" alt="IPS Logo" width="35" height="35">
                 </a>
@@ -96,6 +95,8 @@
                 <li data-target="#carousel-example-generic" data-slide-to="4"></li>
                 <li data-target="#carousel-example-generic" data-slide-to="5"></li>
                 <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="7"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="8"></li>
             </ol>
 
             <!-- Wrapper for slides -->
@@ -104,14 +105,33 @@
                     <img src="resources/img/slider_0.jpg" alt="...">
                 </div>
                 <div class="item">
-                    <img src="resources/img/slider_7.jpg" alt="...">
+                    <img src="resources/img/slider_1.jpg" alt="...">
                 </div>
+                <div class="item">
+                    <img src="resources/img/slider_2.jpg" alt="...">
+                </div>
+                <!--<div class="item">
+                    <img src="resources/img/slider_3.jpg" alt="...">
+                </div>-->
                 <div class="item">
                     <img src="resources/img/slider_4.jpg" alt="...">
                 </div>
                 <div class="item">
                     <img src="resources/img/slider_5.jpg" alt="...">
                 </div>
+                <div class="item">
+                    <img src="resources/img/slider_6.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img src="resources/img/slider_7.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img src="resources/img/slider_8.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img src="resources/img/slider_9.jpg" alt="...">
+                </div>
+
             </div>
 
             <!-- Controls -->
@@ -127,32 +147,11 @@
     </div>
 
 
-    <!-- seccion logos-->
+    <!-- seccion brands-->
     <div class="container-fluid" style="padding: 20px">
         <center>
             <div class="row" style="width: 100%;">
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/9.png"></div>
-                <div onclick="addFilterBrand('trinity')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/2.jpg"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/10.jpg"></div>
-                <div onclick="addFilterBrand('gboost')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/4.jpg"></div>
-                <div onclick="addFilterBrand('lonestar')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/5.jpg"></div>
-                <div onclick="addFilterBrand('epi')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/6.jpg"></div>
-                <div onclick="addFilterBrand('hcr')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/7.jpg"></div>
-                <div onclick="addFilterBrand('tar')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/3.png"></div>
-                <div onclick="addFilterBrand('rugged')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/8.png"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/11.png"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/12.jpg"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/13.png"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/14.png"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/15.jpg"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/16.jpg"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/17.jpg"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/18.png"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/19.png"></div>
-                <div onclick="addFilterBrand('all')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/20.png"></div>
-                <div onclick="addFilterBrand('ips')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/22.jpg"></div>
-                <div onclick="addFilterBrand('duraclutch')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/23.png"></div>
-                <div onclick="addFilterBrand('xaxia')" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/sliders/24.png"></div>
+                <div ng-repeat="b in brands" ng-click="addFilterBrand(b.name)" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/brands/{{b.photos[0]}}"></div>
             </div>
         </center>
     </div>
@@ -166,15 +165,9 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                <iframe style="margin: auto;" width="600" height="400" src="https://www.youtube.com/embed/G9rvxf9ZF8M?autoplay=0">
+                <iframe style="margin: auto;" width="600" height="400" src="https://www.youtube.com/embed/mMgcnBvOMAQ?autoplay=0">
                 </iframe>
             </div>
-
-            <div class="item">
-                <iframe style="margin: auto;" width="600" height="400" src="https://www.youtube.com/embed/G9rvxf9ZF8M?autoplay=0">
-                </iframe>
-            </div>
-
         </div>
 
         <!-- Left and right controls -->
@@ -191,43 +184,27 @@
 
 
     <script>
-                              // Click de los filtros de las marcas
-                              function addFilterBrand(brand) {
-                                  window.location.href = "http://motorsports.innopartserv.com/products.html?brand=" + brand;
-                              }
+        $('#myCarousel').carousel({
+            interval: 2000
+        })
 
+        $('.carousel .item-slider').each(function () {
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
 
-                              $('#myCarousel').carousel({
-                                  interval: 4000
-                              })
+            for (var i = 0; i < 2; i++) {
+                next = next.next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
+                }
 
-                              $('.carousel .item-slider').each(function () {
-                                  var next = $(this).next();
-                                  if (!next.length) {
-                                      next = $(this).siblings(':first');
-                                  }
-                                  next.children(':first-child').clone().appendTo($(this));
-
-                                  for (var i = 0; i < 2; i++) {
-                                      next = next.next();
-                                      if (!next.length) {
-                                          next = $(this).siblings(':first');
-                                      }
-
-                                      next.children(':first-child').clone().appendTo($(this));
-                                  }
-                              });
+                next.children(':first-child').clone().appendTo($(this));
+            }
+        });
     </script>
-
-
-
-
-
-    <div class="container">
-
-
-    </div>
-
 
     <footer class="container-fluid text-center footer" style="padding: 20px">
         <div class="row">
@@ -235,7 +212,9 @@
                 <a href="https://www.facebook.com/IPSmotorsports/">
                     <i class="fa fa-facebook-square  fa-4x" aria-hidden="true" style="color: #3b5998"></i>
                 </a>
-                <i class="fa fa-youtube-play  fa-4x" aria-hidden="true" style="color: red"></i>
+                <a href="https://www.youtube.com/channel/UC61XvEcBLIAAW72al2WMmew">
+                	<i class="fa fa-youtube-play  fa-4x" aria-hidden="true" style="color: red"></i>
+                </a>
                 <a href="https://www.instagram.com/ipsmotorsports/">
                     <i class="fa fa-instagram  fa-4x" aria-hidden="true" style="color: #517fa4"></i>
                 </a>
@@ -253,25 +232,19 @@
         </div>
     </footer>
 
-
-
-
-
-
-
     <style>
         .fb-livechat,
         .fb-widget {
             display: none
         }
-        
+
         .ctrlq.fb-button,
         .ctrlq.fb-close {
             position: fixed;
             right: 24px;
             cursor: pointer
         }
-        
+
         .ctrlq.fb-button {
             z-index: 1;
             background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyOCAxMjgiIGhlaWdodD0iMTI4cHgiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjggMTI4IiB3aWR0aD0iMTI4cHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxnPjxyZWN0IGZpbGw9IiMwMDg0RkYiIGhlaWdodD0iMTI4IiB3aWR0aD0iMTI4Ii8+PC9nPjxwYXRoIGQ9Ik02NCwxNy41MzFjLTI1LjQwNSwwLTQ2LDE5LjI1OS00Niw0My4wMTVjMCwxMy41MTUsNi42NjUsMjUuNTc0LDE3LjA4OSwzMy40NnYxNi40NjIgIGwxNS42OTgtOC43MDdjNC4xODYsMS4xNzEsOC42MjEsMS44LDEzLjIxMywxLjhjMjUuNDA1LDAsNDYtMTkuMjU4LDQ2LTQzLjAxNUMxMTAsMzYuNzksODkuNDA1LDE3LjUzMSw2NCwxNy41MzF6IE02OC44NDUsNzUuMjE0ICBMNTYuOTQ3LDYyLjg1NUwzNC4wMzUsNzUuNTI0bDI1LjEyLTI2LjY1N2wxMS44OTgsMTIuMzU5bDIyLjkxLTEyLjY3TDY4Ljg0NSw3NS4yMTR6IiBmaWxsPSIjRkZGRkZGIiBpZD0iQnViYmxlX1NoYXBlIi8+PC9zdmc+) center no-repeat #0084ff;
@@ -291,13 +264,13 @@
             background-size: 80%;
             transition: all .2s ease-in-out
         }
-        
+
         .ctrlq.fb-button:focus,
         .ctrlq.fb-button:hover {
             transform: scale(1.1);
             box-shadow: 0 2px 8px rgba(0, 0, 0, .09), 0 4px 40px rgba(0, 0, 0, .24)
         }
-        
+
         .fb-widget {
             background: #fff;
             z-index: 2;
@@ -315,12 +288,12 @@
             -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
             -o-box-shadow: 0 5px 40px rgba(0, 0, 0, .16)
         }
-        
+
         .fb-credit {
             text-align: center;
             margin-top: 8px
         }
-        
+
         .fb-credit a {
             transition: none;
             color: #bec2c9;
@@ -330,7 +303,7 @@
             border: 0;
             font-weight: 400
         }
-        
+
         .ctrlq.fb-overlay {
             z-index: 0;
             position: fixed;
@@ -343,7 +316,7 @@
             background: rgba(0, 0, 0, .05);
             display: none
         }
-        
+
         .ctrlq.fb-close {
             z-index: 4;
             padding: 0 6px;
@@ -354,7 +327,7 @@
             margin: 8px;
             border-radius: 3px
         }
-        
+
         .ctrlq.fb-close::after {
             content: 'x';
             font-family: sans-serif
@@ -377,10 +350,8 @@
     <script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
-                              $(document).ready(function () { var t = { delay: 125, overlay: $(".fb-overlay"), widget: $(".fb-widget"), button: $(".fb-button") }; setTimeout(function () { $("div.fb-livechat").fadeIn() }, 8 * t.delay), $(".ctrlq").on("click", function (e) { e.preventDefault(), t.overlay.is(":visible") ? (t.overlay.fadeOut(t.delay), t.widget.stop().animate({ bottom: 0, opacity: 0 }, 2 * t.delay, function () { $(this).hide("slow"), t.button.show() })) : t.button.fadeOut("medium", function () { t.widget.stop().show().animate({ bottom: "30px", opacity: 1 }, 2 * t.delay), t.overlay.fadeIn(t.delay) }) }) });
+        $(document).ready(function () { var t = { delay: 125, overlay: $(".fb-overlay"), widget: $(".fb-widget"), button: $(".fb-button") }; setTimeout(function () { $("div.fb-livechat").fadeIn() }, 8 * t.delay), $(".ctrlq").on("click", function (e) { e.preventDefault(), t.overlay.is(":visible") ? (t.overlay.fadeOut(t.delay), t.widget.stop().animate({ bottom: 0, opacity: 0 }, 2 * t.delay, function () { $(this).hide("slow"), t.button.show() })) : t.button.fadeOut("medium", function () { t.widget.stop().show().animate({ bottom: "30px", opacity: 1 }, 2 * t.delay), t.overlay.fadeIn(t.delay) }) }) });
     </script>
-
-
 
 
 
@@ -388,12 +359,25 @@
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope, $http) {
 
+            $scope.brands = [];
+
             if (!sessionStorage.getItem("cart")) {
                 sessionStorage.setItem("cart", '[]');
             }
 
             $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
 
+            // Click de los filtros de las marcas
+            $scope.addFilterBrand = function (brand) {
+                window.location.href = "http://motorsports.innopartserv.com/products.html?brand=" + brand;
+            }
+
+            $http.get("backend/bd_products.php?data=brand")
+                .then(function (response) {
+                    if (response.data) {
+                        $scope.brands = response.data;
+                    }
+                });
         });
     </script>
 

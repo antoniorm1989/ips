@@ -102,8 +102,8 @@
                         <tbody ng-repeat="p in cartList">
                             <tr>
                                 <td width="10%">
-                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="data:{{p.photos[0].filetype}};base64,{{p.photos[0].base64}}"
-                                    />
+                                    
+                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="resources/img/products/{{p.photos[0]}}"/>
                                 </td>
                                 <td width="40%" style="vertical-align:middle">
                                     <div ng-click="onClickProductView(p)" style="cursor:pointer">
@@ -161,8 +161,7 @@
                         <tbody ng-repeat="p in cartList">
                             <tr>
                                 <td width="10%">
-                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="data:{{p.photos[0].filetype}};base64,{{p.photos[0].base64}}"
-                                    />
+                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="resources/img/products/{{p.photos[0]}}"/>
                                 </td>
                                 <td width="40%" style="vertical-align:middle">
                                     <div ng-click="onClickProductView(p)" style="cursor:pointer">
@@ -451,7 +450,7 @@
 
             $scope.onClickAddProduct = function (p) {
 
-                $http.get("bd_products.php?data=productStock&id_product=" + p.id_product)
+                $http.get("backend/bd_products.php?data=productStock&id_product=" + p.id_product)
                     .then(function (response) {
 
                         var stock = parseInt(response.data);
@@ -583,7 +582,7 @@
                         }
                     };
 
-                    $http.get("CreatePaymentUsingPayPal.php?payment=" + JSON.stringify(payment))
+                    $http.get("backend/CreatePaymentUsingPayPal.php?payment=" + JSON.stringify(payment))
                         .then(function (response) {
                             resolve(response.data);
                         });
@@ -613,7 +612,7 @@
                             // Por cada producto se agrega el costo del shipping
                             cartList.forEach(function (item, index) {
 
-                                $http.get("http://motorsports.innopartserv.com/calculate_shipping.php?"
+                                $http.get("backend/calculate_shipping.php?"
                                     + "originZip=" + $scope.paymentDetails.payer.payer_info.shipping_address.postal_code
                                     + "&destZip=92243"
                                     + "&pounds=" + item.pounds
@@ -702,7 +701,7 @@
                     }
                 };
 
-                $http.get("UpdatePayment.php?paymentId=" + this.paymentDetails.id + "&amount=" + JSON.stringify(amount))
+                $http.get("backend/UpdatePayment.php?paymentId=" + this.paymentDetails.id + "&amount=" + JSON.stringify(amount))
                     .then(function (response) {
                         debugger;
 

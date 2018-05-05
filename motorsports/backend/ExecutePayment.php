@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 require __DIR__ . '/bootstrap.php';
-require __DIR__  . '/../../php/ext/PayPal-PHP-SDK/autoload.php';
+require __DIR__  . '/../../../php/ext/PayPal-PHP-SDK/autoload.php';
 
 use PayPal\Api\Amount;
 use PayPal\Api\Details;

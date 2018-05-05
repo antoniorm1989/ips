@@ -10,49 +10,41 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-
-    <script src="../motorsports/resources/lib/boostrap/bootbox.min.js"></script>
-
     <title>IPS Brands</title>
 </head>
 
 <body style="background-color: gainsboro">
 
-    <div ng-app="myApp" ng-controller="myCtrl">
+    <div id="myCtrl" ng-app="myApp" ng-controller="myCtrl">
 
-        <div id="list-brands">
+        <div id="list">
             <h2>Brand list</h2>
-            <button class="btn btn-success" ng-click="create()">New</button>
 
-            <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: right;width: 30%; margin-right: 20px;">
+            <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: left;width: 30%; margin-right: 20px;">
+            <button class="btn btn-success" ng-click="create()"  style="float: right; margin-right: 20px;">New</button>
+            <a href="index.html" class="btn btn-link" style="float: right; margin-right: 20px;">Back</a>
 
-            <table class="table table-striped table-hover table-condensed table-responsive">
+            <table class="table table-striped table-hover table-condensed">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Photo</th>
-                        <th>Name</th>
                         <th>Description</th>
+                        <th>Products</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="c in brands  | filter: searchKeyword ">
+                    <tr ng-repeat="b in brands  | filter: searchKeyword ">
                         <td>{{ $index + 1 }}</td>
                         <td>
-                            <img width="100" height="80" src="../motorsports/resources/img/brands/{{ getFirstPhoto(c.photos) }}" />
+                            <img width="100" height="80" src="../motorsports/resources/img/brands/{{ getFirstPhoto(b.photos) }}" />
                         </td>
-                        <td>{{ c.id_brand}}</td>
-                        <td>{{ c.name}}</td>
-                        <td>{{ c.description}}</td>
+                        <td>{{ b.description}}</td>
+                        <th>{{ b.products}}</th>
                         <td>
-                            <button class="btn btn-danger" ng-click="delete(c.id_brand)">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </button>
-                            <button class="btn btn-info" ng-click="update(c.id_brand)">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </button>
+                            <button class="btn btn-danger" ng-click="delete(b.id_brand)" ng-hide="b.products > 0">Delete</button>
+                            <button class="btn btn-info" ng-click="update(b.id_brand)">Edit</button>
                         </td>
                     </tr>
                 </tbody>
@@ -60,11 +52,6 @@
         </div>
 
         <div id="register" style="width: 90%; margin: auto;">
-
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" ng-model="brand.name">
-            </div>
 
             <div class="form-group">
                 <label for="description">Description:</label>
@@ -89,9 +76,7 @@
                         </th>
                         <td>{{photo}}</td>
                         <td>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="onClickRemovePhoto(photo)">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
+                            <button type="button" class="btn btn-dark btn-sm" ng-click="onClickRemovePhoto(photo)">Delete</button>
                         </td>
                     </tr>
                     <tr>
@@ -106,7 +91,7 @@
             </div>
 
             <center>
-                <button class="btn btn-default" ng-click="back()">Back</button>
+                <button class="btn btn-link" ng-click="back()">Back</button>
                 <button class="btn btn-primary" ng-click="save()">Save</button>
             </center>
             <p/>
@@ -174,8 +159,24 @@
 
     </div>
 
-    <script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+    <!-- text editor -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
+    <script>
         var app = angular.module('myApp', []);
 
         app.controller('myCtrl', function ($scope, $http) {
@@ -199,7 +200,7 @@
                     if (result) {
                         $http({
                             method: 'POST',
-                            url: 'data_base.php?data=deleteCategory',
+                            url: 'data_base.php?data=deleteBrand&store=' + $scope.store,
                             data: { id_brand: id_brand }
                         }).then(function successCallback(response) {
                             alert("La categoria ha sido eliminada.");
@@ -215,7 +216,6 @@
             $scope.create = function () {
                 $scope.brand = {
                     id_brand: 0,
-                    name: "",
                     description: "",
                     photos: []
                 };
@@ -228,7 +228,7 @@
                 myApp.showPleaseWait();
                 $http({
                     method: 'POST',
-                    url: 'data_base.php?data=getCategoryById&store=' + $scope.store,
+                    url: 'data_base.php?data=getBrandById&store=' + $scope.store,
                     data: { id_brand: id_brand }
                 }).then(function successCallback(response) {
                     $scope.brand = response.data[0];
@@ -246,7 +246,7 @@
                 $scope.brand.photosJson = JSON.stringify($scope.brand.photos);
                 $http({
                     method: 'POST',
-                    url: 'data_base.php?store=' + $scope.store + '&data=' + ($scope.isUpdate ? 'updateCategory' : 'createCategory'),
+                    url: 'data_base.php?store=' + $scope.store + '&data=' + ($scope.isUpdate ? 'updateBrand' : 'createBrand'),
                     data: $scope.brand
                 }).then(function successCallback(response) {
                     alert("La categoria ha sido " + ($scope.isUpdate ? "modificada." : "creada."));
@@ -263,14 +263,14 @@
 
             $scope.getAll = function () {
                 myApp.showPleaseWait();
-                $http.get("data_base.php?data=getAllCategory&store=" + $scope.store)
+                $http.get("data_base.php?data=getAllBrand&store=" + $scope.store)
                     .then(function (response) {
                         if (response.data) {
                             $scope.brands = response.data;
                         }
                         myApp.hidePleaseWait();
                     });
-                document.getElementById("list-products").hidden = false;
+                document.getElementById("list").hidden = false;
             }
 
             $scope.back = function () {
@@ -297,7 +297,7 @@
             // Obtiene las fotos disponibles del server
             $scope.getPhotos = function () {
                 $scope.selectedPhoto = 'empty-img.png';
-                $http.get("upload.php/?data=getFilesServer&store=motorsport")
+                $http.get("upload.php/?data=getFilesServer&store=motorsport&&process=brand")
                     .then(function (response) {
                         response.data.shift(); // removemos los primeros dos "." y ".."
                         response.data.shift();
@@ -314,7 +314,7 @@
                 formData.append('file', files, files.name);
                 $http({
                     method: 'POST',
-                    url: 'upload.php/?data=uploadFile&store=motorsport',
+                    url: 'upload.php/?data=uploadFile&store=motorsport&&process=brand',
                     data: formData,
                     headers: { 'Content-Type': undefined },
                 }).then(function (response) {
@@ -332,13 +332,14 @@
                 });
             };
 
-            // Inicializar datos
-            $scope.init();
-
         });
 
         var myApp;
         $(document).ready(function () {
+
+            $('.summernote').summernote({
+                height: 300
+            });
 
             myApp = myApp || (function () {
                 var pleaseWaitDiv = $(
@@ -355,23 +356,18 @@
                         pleaseWaitDiv.modal();
                     },
                     hidePleaseWait: function () {
-                        pleaseWaitDiv.modal('hide');
+                        pleaseWaitDiv.on('shown.bs.modal', function (e) {
+                            pleaseWaitDiv.modal("hide");
+                        });
+                        pleaseWaitDiv.modal("hide");
                     },
                 };
             })();
 
+            angular.element(document.getElementById('myCtrl')).scope().init();
         });
-
     </script>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

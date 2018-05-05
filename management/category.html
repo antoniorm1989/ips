@@ -10,49 +10,37 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-
-    <script src="../motorsports/resources/lib/boostrap/bootbox.min.js"></script>
-
     <title>IPS Categories</title>
 </head>
 
 <body style="background-color: gainsboro">
 
-    <div ng-app="myApp" ng-controller="myCtrl">
+    <div id="myCtrl" ng-app="myApp" ng-controller="myCtrl">
 
-        <div id="list-categories">
+        <div id="list">
             <h2>Category list</h2>
-            <button class="btn btn-success" ng-click="create()">New</button>
 
-            <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: right;width: 30%; margin-right: 20px;">
+            <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: left;width: 30%; margin-right: 20px;">
+            <button class="btn btn-success" ng-click="create()"  style="float: right; margin-right: 20px;">New</button>
+            <a href="index.html" class="btn btn-link" style="float: right; margin-right: 20px;">Back</a>
 
-            <table class="table table-striped table-hover table-condensed table-responsive">
+            <table class="table table-striped table-hover table-condensed">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Photo</th>
-                        <th>Name</th>
                         <th>Description</th>
+                        <th>Products</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="c in categories  | filter: searchKeyword ">
                         <td>{{ $index + 1 }}</td>
-                        <td>
-                            <img width="100" height="80" src="../motorsports/resources/img/categories/{{ getFirstPhoto(c.photos) }}" />
-                        </td>
-                        <td>{{ c.id_category}}</td>
-                        <td>{{ c.name}}</td>
                         <td>{{ c.description}}</td>
+                        <th>{{ c.products}}</th>
                         <td>
-                            <button class="btn btn-danger" ng-click="delete(c.id_category)">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </button>
-                            <button class="btn btn-info" ng-click="update(c.id_category)">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </button>
+                            <button class="btn btn-danger" ng-click="delete(c.id_category)" ng-hide="c.products > 0">Delete</button>
+                            <button class="btn btn-info" ng-click="update(c.id_category)">Edit</button>
                         </td>
                     </tr>
                 </tbody>
@@ -62,120 +50,38 @@
         <div id="register" style="width: 90%; margin: auto;">
 
             <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" ng-model="category.name">
-            </div>
-
-            <div class="form-group">
                 <label for="description">Description:</label>
                 <input type="text" class="form-control" id="description" ng-model="category.description">
             </div>
 
-            <div class="form-group">
-
-                <button data-toggle="modal" data-target="#selectPhoto" ng-click='getPhotos()'>Add photo</button>
-
-                <table class="table table-bordered" style="background-color: ghostwhite;">
-                    <tr>
-                        <th>Photo</th>
-                        <th>Name</th>
-                        <th>Actions</th>
-                    </tr>
-                    <tr ng-repeat="photo in category.photos">
-                        <th>
-                            <center>
-                                <img width="150" height="100" src="../motorsports/resources/img/categories/{{photo}}">
-                            </center>
-                        </th>
-                        <td>{{photo}}</td>
-                        <td>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="onClickRemovePhoto(photo)">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" ng-show="files.length == 0">
-                            <small>
-                                <i>No photo selected.</i>
-                            </small>
-                        </td>
-                    </tr>
-                </table>
-
-            </div>
-
             <center>
-                <button class="btn btn-default" ng-click="back()">Back</button>
+                <button class="btn btn-link" ng-click="back()">Back</button>
                 <button class="btn btn-primary" ng-click="save()">Save</button>
             </center>
             <p/>
 
         </div>
 
-        <!-- Modal fotos -->
-        <div class="modal fade" id="selectPhoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="col-sm-4">
-                            <h4 class="modal-title" id="exampleModalLabel">
-                                <b>Seleccion de foto</b>
-                            </h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <table style="float: right;">
-                                <tr>
-                                    <td>
-                                        <input type='file' name='file' id='file'>
-                                        <br/>
-                                    </td>
-                                    <td>
-                                        <input type='button' class="btn btn-success" value='Upload' id='upload' ng-click='uploadFiles()'>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="container-fluid">
-
-                            <div class="row" style="height: 400px; overflow-y: auto;">
-                                <div class="col-lg-2 col-sm-2 col-xs-3" ng-repeat="f in filesServer" ng-click="setSelectedPhoto(f)">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-body">
-                                            <center>
-                                                <img src="../motorsports/resources/img/categories/{{f}}" class="rounded" style="height:100px !important; width:80px;">
-                                            </center>
-                                        </div>
-                                        <div class="panel-footer" style="font-size:xx-small; height: 30px;">
-                                            <center>
-                                                <b>{{f}}</b>
-                                            </center>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <h6>Foto selecionada :
-                                    <b>{{selectedPhoto}}</b>
-                                </h6>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary" ng-click="onSelectPhoto(selectedPhoto)" data-dismiss="modal">Seleccionar</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+    <!-- text editor -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
+    <script>
         var app = angular.module('myApp', []);
 
         app.controller('myCtrl', function ($scope, $http) {
@@ -186,8 +92,6 @@
             $scope.categories = undefined;
             $scope.category = undefined;
             $scope.isUpdate = false;
-            $scope.filesServer = [];
-            $scope.selectedPhoto = 'empty-img.png';
             document.getElementById("register").hidden = true;
 
             $scope.init = function () {
@@ -199,7 +103,7 @@
                     if (result) {
                         $http({
                             method: 'POST',
-                            url: 'data_base.php?data=deleteCategory',
+                            url: 'data_base.php?data=deleteCategory&store=' + $scope.store,
                             data: { id_category: id_category }
                         }).then(function successCallback(response) {
                             alert("La categoria ha sido eliminada.");
@@ -215,9 +119,7 @@
             $scope.create = function () {
                 $scope.category = {
                     id_category: 0,
-                    name: "",
-                    description: "",
-                    photos: []
+                    description: ""
                 };
                 $scope.isUpdate = false;
                 document.getElementById("register").hidden = false;
@@ -270,7 +172,7 @@
                         }
                         myApp.hidePleaseWait();
                     });
-                document.getElementById("list-products").hidden = false;
+                document.getElementById("list").hidden = false;
             }
 
             $scope.back = function () {
@@ -278,67 +180,14 @@
                 document.getElementById("list").hidden = false;
             }
 
-            // Fotos
-            // Obtiene la primera foto para el listado
-            $scope.getFirstPhoto = function (photosJson) {
-                return JSON.parse(photosJson)[0];
-            }
-
-            // Actualiza la foto seleccionada del modal
-            $scope.setSelectedPhoto = function (photo) {
-                $scope.selectedPhoto = photo;
-            }
-
-            // Accion de aceptar del modal seleccion de foto
-            $scope.onSelectPhoto = function () {
-                $scope.category.photos.push($scope.selectedPhoto);
-            }
-
-            // Obtiene las fotos disponibles del server
-            $scope.getPhotos = function () {
-                $scope.selectedPhoto = 'empty-img.png';
-                $http.get("upload.php/?data=getFilesServer&store=motorsport")
-                    .then(function (response) {
-                        response.data.shift(); // removemos los primeros dos "." y ".."
-                        response.data.shift();
-                        $scope.filesServer = response.data;
-                    }, function (error) {
-                        alert(error.data)
-                    });
-            }
-
-            // Sube una nueva foto al server
-            $scope.uploadFiles = function () {
-                var formData = new FormData();
-                var files = document.getElementById('file').files[0];
-                formData.append('file', files, files.name);
-                $http({
-                    method: 'POST',
-                    url: 'upload.php/?data=uploadFile&store=motorsport',
-                    data: formData,
-                    headers: { 'Content-Type': undefined },
-                }).then(function (response) {
-                    console.log(response.data);
-                    $scope.getPhotos();
-                }, function (error) {
-                    alert(error);
-                });
-            }
-
-            // Elimina foto del lisatdo de fotos del producto
-            $scope.onClickRemovePhoto = function (photo) {
-                $scope.category.photos = $scope.category.photos.filter(function (p) {
-                    return p != photo;
-                });
-            };
-
-            // Inicializar datos
-            $scope.init();
-
         });
 
         var myApp;
         $(document).ready(function () {
+
+            $('.summernote').summernote({
+                height: 300
+            });
 
             myApp = myApp || (function () {
                 var pleaseWaitDiv = $(
@@ -355,23 +204,18 @@
                         pleaseWaitDiv.modal();
                     },
                     hidePleaseWait: function () {
-                        pleaseWaitDiv.modal('hide');
+                        pleaseWaitDiv.on('shown.bs.modal', function (e) {
+                            pleaseWaitDiv.modal("hide");
+                        });
+                        pleaseWaitDiv.modal("hide");
                     },
                 };
             })();
 
+            angular.element(document.getElementById('myCtrl')).scope().init();
         });
-
     </script>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

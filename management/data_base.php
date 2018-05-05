@@ -1,5 +1,4 @@
 <?php
-
 //Bloque de conexion a Mysql
 $servername = "192.185.131.29";
 $username = "innopbbl_admon";
@@ -24,7 +23,7 @@ $data = $_GET["data"];
 
 // Get All products
 if($data == "getAllProducts"){
-	$sql = "SELECT p2.id_product, p2.name, p2.price, p2.low_price, p2.c_name, b.name as b_name, b.description as b_description, c_description as c_description, p2.stock, p2.part_number, p2.photos FROM (SELECT p.id_product, p.name, p.price, p.low_price, p.stock, p.part_number, p.id_cto_brand, p.photos, c.name as c_name, c.description as c_description FROM ".$bd.".product as p INNER JOIN ".$bd.".cto_product_category as c ON p.id_cto_product_category = c.id_cto_product_category) as p2 INNER JOIN ".$bd.".cto_brand as b ON p2.id_cto_brand = b.id_brand;";
+	$sql = "SELECT p2.id_product, p2.name, p2.price, p2.low_price, b.description as b_description, c_description as c_description, p2.stock, p2.part_number, p2.photos FROM (SELECT p.id_product, p.name, p.price, p.low_price, p.stock, p.part_number, p.id_cto_brand, p.photos, c.description as c_description FROM ".$bd.".product as p INNER JOIN ".$bd.".cto_product_category as c ON p.id_cto_product_category = c.id_cto_product_category) as p2 INNER JOIN ".$bd.".cto_brand as b ON p2.id_cto_brand = b.id_brand;";
 	
 	$result_json = "[";
 	$result = $conn->query($sql);
@@ -66,7 +65,7 @@ if($data == "getProductById"){
 
 // Add new product
 if($data == "create"){
-	
+
     try {
  
      $postdata = file_get_contents("php://input");
@@ -88,14 +87,14 @@ if($data == "create"){
      $length= $request->length;
      $width= $request->width;
      $height= $request->height;
- 
-    $sql = "INSERT INTO ".$bd.".product (name, short_description, description, price, low_price, stock, part_number, id_cto_product_category, id_cto_brand, pounds, ounces, length, width, height, photos) VALUES ('$name','$short_description', '$description', $price, $low_price, $stock, '$part_number', $category, $brand, $pounds, $ounces, $length, $width, $height, '$photos');";
- 
-   if ($conn->query($sql) === TRUE) {
-       echo "New record created successfully";
-   } else {
-       echo "Error: " . $sql . "<br>" . $conn->error;
-   }
+     
+     $sql = "INSERT INTO ".$bd.".product (name, short_description, description, price, low_price, stock, part_number, id_cto_product_category, id_cto_brand, pounds, ounces, length, width, height, photos) VALUES ('$name','$short_description', '$description', $price, $low_price, $stock, '$part_number', $category, $brand, $pounds, $ounces, $length, $width, $height, '$photos');";
+     
+     if ($conn->query($sql) === TRUE) {
+         echo "New record created successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
    
    } catch (Exception $e) {
          echo 'Excepcion capturada: ',  $e->getMessage(), "\n";
@@ -191,7 +190,7 @@ if($data == "create"){
 
 // Get all brands
 if($data == "getAllBrand"){
-	$sql = "SELECT * FROM ".$bd.".cto_brand";
+	$sql = "SELECT *, (SELECT COUNT(*) FROM innopbbl_tienda.product as p WHERE p.id_cto_brand = b.id_brand ) as products FROM innopbbl_tienda.cto_brand as b;";
 	
 	$result_json = "[";
 	$result = $conn->query($sql);
@@ -199,7 +198,7 @@ if($data == "getAllBrand"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json."{\"id_brand\":\"".$row["id_brand"]."\",\"name\":\"".$row["name"]."\",\"description\":\"".$row["description"]."\"},";
+	        $result_json = $result_json."{\"id_brand\":\"".$row["id_brand"]."\",\"description\":\"".$row["description"]."\",\"photos\":\"".addslashes($row["photos"])."\", \"products\":\"".$row["products"]."\"},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;
@@ -222,7 +221,7 @@ if($data == "getBrandById"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json = $result_json."{\"id_brand\":\"".$row["id_brand"]."\",\"name\":\"".$row["name"]."\",\"description\":\"".$row["description"]."\"},";
+	        $result_json = $result_json = $result_json."{\"id_brand\":\"".$row["id_brand"]."\",\"description\":\"".$row["description"]."\",\"photos\":".$row["photos"]."},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;
@@ -240,10 +239,10 @@ if($data == "createBrand"){
      $request = json_decode($postdata);
      
      $id_brand= $request->id_brand;
-     $name= addslashes($request->name);
      $description = addslashes($request->description);
+     $photos= $request->photosJson;
  
-    $sql = "INSERT INTO ".$bd.".cto_brand (name, description) VALUES ('$name', '$description');";
+    $sql = "INSERT INTO ".$bd.".cto_brand (description, photos) VALUES ('$description', '$photos');";
  
    if ($conn->query($sql) === TRUE) {
        echo "New record created successfully";
@@ -257,7 +256,7 @@ if($data == "createBrand"){
  }
 
  // Update brand
- if($data == "update"){
+ if($data == "updateBrand"){
  
     try {
  
@@ -265,12 +264,12 @@ if($data == "createBrand"){
      $request = json_decode($postdata);
      
      $id_brand= $request->id_brand;
-     $name= addslashes($request->name);
      $description = addslashes($request->description);
+     $photos= $request->photosJson; 
      
     $sql = "UPDATE ".$bd.".cto_brand SET"
-    . " name = '$name', "
-    . " description = '$description'"
+    . " description = '$description',"
+    . " photos='$photos'"
     . " WHERE id_brand=$id_brand;";
     
    echo $sql;
@@ -316,7 +315,7 @@ if($data == "createBrand"){
 
 // Get all categories
 if($data == "getAllCategory"){
-	$sql = "SELECT * FROM ".$bd.".cto_product_category";
+	$sql = "SELECT *, (SELECT COUNT(*) FROM innopbbl_tienda.product as p WHERE p.id_cto_product_category = c.id_cto_product_category ) as products FROM innopbbl_tienda.cto_product_category as c;";
 	
 	$result_json = "[";
 	$result = $conn->query($sql);
@@ -324,7 +323,7 @@ if($data == "getAllCategory"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json."{\"id_category\":\"".$row["id_cto_product_category"]."\",\"name\":\"".$row["name"]."\",\"description\":\"".$row["description"]."\"},";
+	        $result_json = $result_json."{\"id_category\":\"".$row["id_cto_product_category"]."\",\"description\":\"".$row["description"]."\", \"products\":\"".$row["products"]."\"},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;
@@ -347,7 +346,7 @@ if($data == "getCategoryById"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json."{\"id_category\":\"".$row["id_cto_product_category"]."\",\"name\":\"".$row["name"]."\",\"description\":\"".$row["description"]."\"},";
+	        $result_json = $result_json."{\"id_category\":\"".$row["id_cto_product_category"]."\",\"description\":\"".$row["description"]."\"},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;
@@ -365,10 +364,9 @@ if($data == "createCategory"){
      $request = json_decode($postdata);
      
      $id_category= $request->id_category;
-     $name= addslashes($request->name);
      $description = addslashes($request->description);
  
-    $sql = "INSERT INTO ".$bd.".cto_product_category (name, description) VALUES ('$name','$description');";
+    $sql = "INSERT INTO ".$bd.".cto_product_category ( description) VALUES ('$description');";
  
    if ($conn->query($sql) === TRUE) {
        echo "New record created successfully";
@@ -390,11 +388,10 @@ if($data == "createCategory"){
      $request = json_decode($postdata);
      
      $id_category= $request->id_category;
-     $name= addslashes($request->name);
      $description = addslashes($request->description);
+     $photos= $request->photosJson; 
      
     $sql = "UPDATE ".$bd.".cto_product_category SET"
-    . " name = '$name', "
     . " description = '$description'"
     . " WHERE id_cto_product_category=$id_category;";
     
@@ -411,7 +408,7 @@ if($data == "createCategory"){
    } 
  }
 
-   // Delete brand
+   // Delete category
    if($data == "deleteCategory"){
  
     try {

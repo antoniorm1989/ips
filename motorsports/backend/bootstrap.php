@@ -5,7 +5,7 @@
  */
 
 //require __DIR__ . '/common.php';
-require __DIR__  . '/../../php/ext/PayPal-PHP-SDK/autoload.php';
+require __DIR__  . '/../../../php/ext/PayPal-PHP-SDK/autoload.php';
 
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;

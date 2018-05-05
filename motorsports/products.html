@@ -36,6 +36,45 @@
 
         .navbar {
             border-radius: 0;
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            z-index: 20;
+        }
+
+        .header-list {
+            position: fixed;
+            top: 50px;
+            right: 0px;
+            width: 80%;
+            z-index: 10;
+            background-color: white;
+            padding: 10px;
+        }
+
+        .center-filters {
+            position: fixed;
+            top: 100px;
+            right: 0px;
+            width: 80%;
+            z-index: 10;
+            background-color: white;
+        }
+
+        .list-products {
+            position: absolute;
+            top: 130px;
+            left: 27%;
+            width: 94%;
+            z-index: 5;
+        }
+
+        .left-filters {
+            position: fixed;
+            top: 60px;
+            left: 0px;
+            width: 20%;
+            z-index: 10;
         }
         /* Remove the jumbotrons default bottom margin */
 
@@ -85,12 +124,6 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
         }
 
-        .list-product-name {
-            text-decoration: underline;
-            color: #337ab7;
-            cursor: pointer
-        }
-
         .text_truncate {
             display: -webkit-box;
             max-width: 90%;
@@ -99,6 +132,12 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        .list-product-name {
+            text-decoration: underline;
+            color: #337ab7;
+            cursor: pointer
         }
     </style>
 
@@ -109,7 +148,7 @@
 </head>
 
 <body>
-    <div ng-app="myApp" ng-controller="myCtrl">
+    <div ng-app="myApp" ng-controller="myCtrl" id="main">
 
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -143,7 +182,7 @@
         <div class="container" style="width:100%">
             <div class="row">
 
-                <div class="col-sm-2 sidenav" style="padding-right: 0px; padding-left: 10px;">
+                <div class="col-sm-2 sidenav left-filters" style="padding-right: 0px; padding-left: 10px;">
                     <div class="panel-group" id="accordion">
 
                         <!-- Categorias -->
@@ -200,10 +239,9 @@
                 </div>
 
                 <div class="col-sm-10 text-left">
-                    <div class="container" style="width: 100%;" ng-cloak>
+                    <div class="container" ng-cloak>
 
-                        <div class="row">
-
+                        <div class="row header-list">
                             <center>
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     <div class="form-group">
@@ -247,15 +285,14 @@
                                 <div class="col-lg-3 col-sm-3 col-xs-3">
                                     All Items ({{totalProducts}})
                                 </div>
-
                             </center>
 
                         </div>
 
-                        <div class="row" style="border-top: solid 1px black;">
+                        <div class="row center-filters" style="border-top: solid 1px black;">
 
                             <div class="col-sm-12">
-                                Filters
+                                <b>Filters</b>
                                 <span class="badge badge-pill badge-default" ng-repeat="c in allCategories" ng-hide="! c.checked">
                                         {{c.description}}
                                         <i class="fa fa-times" aria-hidden="true" ng-click="onRemoveFilter('category',c)"></i>
@@ -270,10 +307,9 @@
 
                         </div>
 
-                        <div class="row" style="height: 480px; overflow-y: auto;margin-top: 10px;">
-
+                        <div class="row list-products">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" ng-repeat="p in paginatedProducts">
+                                <li class="list-group-item" ng-repeat="p in paginatedProducts" style="padding: 10px 0px; border-top: 1px solid #ddd;">
                                     <div class="container" style="width: 100%;">
                                         <div class="row">
 
@@ -282,7 +318,7 @@
                                             </div>
 
                                             <div class="col-lg-8 col-sm-8 col-xs-8">
-                                                <b style="color: red;">{{p.name}}</b>
+                                                <b class="list-product-name" style="color: red;" ng-click="onClickProductView(p)">{{p.name}}</b>
                                                 <br/> model : <b>{{p.part_number}}</b>
                                                 </br/>
                                                 <p/>
@@ -305,7 +341,6 @@
                                     </div>
                                 </li>
                             </ul>
-
                         </div>
 
                     </div>
@@ -550,6 +585,7 @@
 
                 $scope.paginatedProducts = $scope.products.slice($scope.currentPage * $scope.productsByPage, ($scope.currentPage + 1) * $scope.productsByPage);
 
+                document.getElementById('main').scrollIntoView(true);
             }
 
             $scope.clickAddToCart = function (product) {
@@ -596,8 +632,8 @@
 
             }
 
-            $scope.onClickProductViewDetail = function (product) {
-                window.location.href = "http://motorsports.innopartserv.com/product.html?product=" + product.id_product;
+            $scope.onClickProductView = function (product) {
+                window.location.href = "product.html?product=" + product.id_product;
             }
 
             $scope.onRemoveFilter = function (type, filter) {
@@ -654,7 +690,7 @@
 
 
         //Imagen modal en detalle del producto
-        function openModal() {
+        /*function openModal() {
             document.getElementById('myModal').style.display = "block";
             document.getElementById('productDetail').style.display = "none";
         }
@@ -662,7 +698,7 @@
         function closeModal() {
             document.getElementById('myModal').style.display = "none";
             document.getElementById('productDetail').style.display = "block";
-        }
+        }*/
     </script>
 
 </body>
