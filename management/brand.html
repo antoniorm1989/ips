@@ -21,7 +21,7 @@
             <h2>Brand list</h2>
 
             <input type="text" class="form-control" ng-model="searchKeyword" placeholder="search..." style="float: left;width: 30%; margin-right: 20px;">
-            <button class="btn btn-success" ng-click="create()"  style="float: right; margin-right: 20px;">New</button>
+            <button class="btn btn-success" ng-click="create()" style="float: right; margin-right: 20px;">New</button>
             <a href="index.html" class="btn btn-link" style="float: right; margin-right: 20px;">Back</a>
 
             <table class="table table-striped table-hover table-condensed">
@@ -56,6 +56,11 @@
             <div class="form-group">
                 <label for="description">Description:</label>
                 <input type="text" class="form-control" id="description" ng-model="brand.description">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Website:</label>
+                <input type="text" class="form-control" id="description" ng-model="brand.website"  placeholder="http://www.example.com">
             </div>
 
             <div class="form-group">
@@ -217,7 +222,8 @@
                 $scope.brand = {
                     id_brand: 0,
                     description: "",
-                    photos: []
+                    photos: [],
+                    website: ''
                 };
                 $scope.isUpdate = false;
                 document.getElementById("register").hidden = false;

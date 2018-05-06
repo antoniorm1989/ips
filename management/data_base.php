@@ -221,7 +221,7 @@ if($data == "getBrandById"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json = $result_json."{\"id_brand\":\"".$row["id_brand"]."\",\"description\":\"".$row["description"]."\",\"photos\":".$row["photos"]."},";
+	        $result_json = $result_json = $result_json."{\"id_brand\":\"".$row["id_brand"]."\",\"description\":\"".$row["description"]."\",\"photos\":".$row["photos"].",\"website\":\"".$row["website"]."\"},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;
@@ -241,8 +241,9 @@ if($data == "createBrand"){
      $id_brand= $request->id_brand;
      $description = addslashes($request->description);
      $photos= $request->photosJson;
+     $website= $request->website;
  
-    $sql = "INSERT INTO ".$bd.".cto_brand (description, photos) VALUES ('$description', '$photos');";
+    $sql = "INSERT INTO ".$bd.".cto_brand (description, photos, website) VALUES ('$description', '$photos', '$website');";
  
    if ($conn->query($sql) === TRUE) {
        echo "New record created successfully";
@@ -266,10 +267,12 @@ if($data == "createBrand"){
      $id_brand= $request->id_brand;
      $description = addslashes($request->description);
      $photos= $request->photosJson; 
+     $website= $request->website; 
      
     $sql = "UPDATE ".$bd.".cto_brand SET"
     . " description = '$description',"
-    . " photos='$photos'"
+    . " photos='$photos',"
+    . " website='$website'"
     . " WHERE id_brand=$id_brand;";
     
    echo $sql;

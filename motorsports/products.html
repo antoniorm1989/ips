@@ -189,7 +189,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Category</a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><b>Category</b></a>
                                 </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse in">
@@ -214,7 +214,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Brand</a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><b>Brand</b></a>
                                 </h4>
                             </div>
                             <div id="collapse2" class="panel-collapse collapse">
@@ -314,7 +314,7 @@
                                         <div class="row">
 
                                             <div class="col-lg-2 col-sm-2 col-xs-2">
-                                                <img src="resources/img/products/{{p.photos[0]}}" class="rounded img-product" alt="{{p.name}}">
+                                                <img src="resources/img/products/{{p.photos[0]}}" class="rounded img-product" alt="{{p.name}}" />
                                             </div>
 
                                             <div class="col-lg-8 col-sm-8 col-xs-8">
@@ -453,9 +453,7 @@
             if (!sessionStorage.getItem("cart")) {
                 sessionStorage.setItem("cart", '[]');
             }
-
             $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
-
 
             //Functions
             $scope.loadProducts = function () {
@@ -477,7 +475,7 @@
                 var brands = $scope.allBrands.filter(function (item) {
                     return item.checked == true;
                 }).map(function (item) {
-                    return parseInt(item.id_cto_brand);
+                    return parseInt(item.id_brand);
                 });
 
                 // Reset filters
@@ -496,14 +494,14 @@
                 }).forEach(function (product) {
 
                     $scope.allBrands = $scope.allBrands.map(function (brand) {
-                        if (brand.id_cto_brand == product.id_cto_brand) {
+                        if (brand.id_brand == product.id_brand) {
                             brand.count = brand.count + 1;
                         }
                         return brand;
                     });
                 });
                 $scope.allProducts.filter(function (product) {
-                    return brands.includes(product.id_cto_brand) || brands.length == 0;
+                    return brands.includes(product.id_brand) || brands.length == 0;
                 }).forEach(function (product) {
 
                     $scope.allCategories = $scope.allCategories.map(function (category) {
@@ -516,7 +514,7 @@
 
                 // Update products
                 $scope.products = $scope.allProducts.filter(function (product) {
-                    return (brands.includes(product.id_cto_brand) || brands.length == 0) && (categories.includes(product.id_cto_product_category) || categories.length == 0);
+                    return (brands.includes(product.id_brand) || brands.length == 0) && (categories.includes(product.id_cto_product_category) || categories.length == 0);
                 });
 
                 $scope.totalProducts = $scope.products.length;
@@ -651,7 +649,7 @@
                     case 'brand':
 
                         $scope.allBrands = $scope.allBrands.map(function (brand) {
-                            if (brand.id_cto_brand == filter.id_cto_brand) {
+                            if (brand.id_brand == filter.id_brand) {
                                 brand.checked = false;
                             }
                             return brand;
@@ -671,6 +669,17 @@
                     $http.get("backend/bd_products.php?data=brand")
                         .then(function (response) {
                             $scope.allBrands = response.data;
+
+                            // filter url 
+                            var reg = new RegExp('[?&]brand=([^&#]*)', 'i');
+                            var brandUrl = reg.exec(window.location.href);
+
+                            if (brandUrl) {
+                                $scope.allBrands = $scope.allBrands.map(function (item) {
+                                    item.checked = brandUrl[1] == item.id_brand;
+                                    return item;
+                                });
+                            }
 
                             $scope.loadProducts();
                         });

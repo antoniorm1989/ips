@@ -38,6 +38,17 @@
         .active {
             display: flex !important;
         }
+
+        .image-brand {
+            margin: 0px 20px;
+            width: 150px;
+            height: 100px;
+            cursor: pointer;
+        }
+
+        .image-brand:hover {
+            opacity: .5;
+        }
     </style>
 </head>
 
@@ -151,7 +162,13 @@
     <div class="container-fluid" style="padding: 20px">
         <center>
             <div class="row" style="width: 100%;">
-                <div ng-repeat="b in brands" ng-click="addFilterBrand(b.name)" class="col-lg-3 col-sm-3 col-xs-3"><img style="margin: 20px; width: 150px; height: 100px;" class="img-responsive img-thumbnail" src="resources/img/brands/{{b.photos[0]}}"></div>
+                <div ng-repeat="b in brands" class="col-lg-3 col-sm-3 col-xs-3">
+                    <img ng-click="addFilterBrand(b.id_brand)" class="image-brand img-responsive img-thumbnail" src="resources/img/brands/{{b.photos[0]}}">
+                    <br/>
+                    <a href={{b.website}}>{{b.description}}</a>
+                    <br/>
+                    <p/>
+                </div>
             </div>
         </center>
     </div>
@@ -368,8 +385,8 @@
             $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
 
             // Click de los filtros de las marcas
-            $scope.addFilterBrand = function (brand) {
-                window.location.href = "http://motorsports.innopartserv.com/products.html?brand=" + brand;
+            $scope.addFilterBrand = function (id_brand) {
+                window.location.href = "products.html?brand=" + id_brand;
             }
 
             $http.get("backend/bd_products.php?data=brand")
