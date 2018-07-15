@@ -3,17 +3,17 @@
 switch ($_GET["process"]) {
     case "product":
         if($_GET["store"] == 'motorsport'){
-	$target_dir = "../motorsports/resources/img/products/";
-	}else{
-	$target_dir = "../motorsports/resources/img/products/";
-	}
+            $target_dir = "../motorsports/resources/img/products/";
+        }else{
+            $target_dir = "../agricultural/resources/img/products/";
+        }
         break;
     case "brand":
         if($_GET["store"] == 'motorsport'){
-	$target_dir = "../motorsports/resources/img/brands/";
-	}else{
-	$target_dir = "../motorsports/resources/img/brands/";
-	}
+            $target_dir = "../motorsports/resources/img/brands/";
+        }else{
+            $target_dir = "../agricultural/resources/img/brands/";
+        }
         break;
 }
 

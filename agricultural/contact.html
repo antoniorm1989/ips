@@ -10,13 +10,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         /* Remove the navbar's default rounded borders and increase the bottom margin */
-
+        
         .navbar {
             margin-bottom: 50px;
             border-radius: 0;
         }
         /* Remove the jumbotron's default bottom margin */
-
+        
         .jumbotron {
             margin-bottom: 0;
             background-color: #cccccc;
@@ -25,12 +25,12 @@
             background-size: cover;
         }
         /* Add a gray background color and some padding to the footer */
-
+        
         footer {
             background-color: #f2f2f2;
             padding: 25px;
         }
-
+        
         body,
         html {
             height: 100%;
@@ -169,7 +169,7 @@
             $scope.message = "";
             $scope.subject = "";
             $scope.sendMessage = function () {
-                $http.get("backend/send_email.php?name=" + $scope.name + "&&mail=" + $scope.mail + "&&message=" + $scope.message + "&&subject=" + $scope.subject)
+                $http.get("send_email.php?name=" + $scope.name + "&&mail=" + $scope.mail + "&&message=" + $scope.message + "&&subject=" + $scope.subject)
                     .then(function (response) {
                         if (response.data == "success") {
                             alert("your email was sent successfully");
@@ -181,6 +181,7 @@
             }
 
         });
+
     </script>
 
 </body>

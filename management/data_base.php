@@ -23,7 +23,7 @@ $data = $_GET["data"];
 
 // Get All products
 if($data == "getAllProducts"){
-	$sql = "SELECT p2.id_product, p2.name, p2.price, p2.low_price, b.description as b_description, c_description as c_description, p2.stock, p2.part_number, p2.photos FROM (SELECT p.id_product, p.name, p.price, p.low_price, p.stock, p.part_number, p.id_cto_brand, p.photos, c.description as c_description FROM ".$bd.".product as p INNER JOIN ".$bd.".cto_product_category as c ON p.id_cto_product_category = c.id_cto_product_category) as p2 INNER JOIN ".$bd.".cto_brand as b ON p2.id_cto_brand = b.id_brand;";
+	$sql = "SELECT p2.id_product, p2.name, p2.price, p2.low_price, b.description as b_description, c_description as c_description, p2.stock, p2.part_number, p2.photos FROM (SELECT p.id_product, p.name, p.price, p.low_price, p.stock, p.part_number, p.id_brand, p.photos, c.description as c_description FROM ".$bd.".product as p INNER JOIN ".$bd.".cto_product_category as c ON p.id_cto_product_category = c.id_cto_product_category) as p2 INNER JOIN ".$bd.".cto_brand as b ON p2.id_brand = b.id_brand;";
 	
 	$result_json = "[";
 	$result = $conn->query($sql);
@@ -54,7 +54,7 @@ if($data == "getProductById"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json."{\"id_product\":\"".$row["id_product"]."\",\"name\":\"".$row["name"]."\",\"description\":\"".addslashes($row["description"])."\",\"price\":\"".$row["price"]."\",\"low_price\":\"".$row["low_price"]."\", \"id_category\":\"".$row["id_cto_product_category"]."\", \"max_sale\":\"".$row["max_sale"]."\",\"short_description\":\"".addslashes($row["short_description"])."\",\"id_brand\":\"".$row["id_cto_brand"]."\",\"part_number\":\"".$row["part_number"]."\",\"stock\":\"".$row["stock"]."\",\"photos\":".$row["photos"].",\"pounds\":\"".$row["pounds"]."\",\"ounces\":\"".$row["ounces"]."\",\"length\":\"".$row["length"]."\",\"width\":\"".$row["width"]."\",\"height\":\"".$row["height"]."\"},";
+	        $result_json = $result_json."{\"id_product\":\"".$row["id_product"]."\",\"name\":\"".$row["name"]."\",\"description\":\"".addslashes($row["description"])."\",\"price\":\"".$row["price"]."\",\"low_price\":\"".$row["low_price"]."\", \"id_category\":\"".$row["id_cto_product_category"]."\", \"max_sale\":\"".$row["max_sale"]."\",\"short_description\":\"".addslashes($row["short_description"])."\",\"id_brand\":\"".$row["id_brand"]."\",\"part_number\":\"".$row["part_number"]."\",\"stock\":\"".$row["stock"]."\",\"photos\":".$row["photos"].",\"pounds\":\"".$row["pounds"]."\",\"ounces\":\"".$row["ounces"]."\",\"length\":\"".$row["length"]."\",\"width\":\"".$row["width"]."\",\"height\":\"".$row["height"]."\"},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;
@@ -88,7 +88,7 @@ if($data == "create"){
      $width= $request->width;
      $height= $request->height;
      
-     $sql = "INSERT INTO ".$bd.".product (name, short_description, description, price, low_price, stock, part_number, id_cto_product_category, id_cto_brand, pounds, ounces, length, width, height, photos) VALUES ('$name','$short_description', '$description', $price, $low_price, $stock, '$part_number', $category, $brand, $pounds, $ounces, $length, $width, $height, '$photos');";
+     $sql = "INSERT INTO ".$bd.".product (name, short_description, description, price, low_price, stock, part_number, id_cto_product_category, id_brand, pounds, ounces, length, width, height, photos) VALUES ('$name','$short_description', '$description', $price, $low_price, $stock, '$part_number', $category, $brand, $pounds, $ounces, $length, $width, $height, '$photos');";
      
      if ($conn->query($sql) === TRUE) {
          echo "New record created successfully";
@@ -135,7 +135,7 @@ if($data == "create"){
     . " stock=$stock, "
     . " part_number= '$part_number', "
     . " id_cto_product_category=$category, "
-    . " id_cto_brand=$brand, "
+    . " id_brand=$brand, "
     . " pounds=$pounds, "
     . " ounces=$ounces, "
     . " length=$length, "
@@ -190,7 +190,7 @@ if($data == "create"){
 
 // Get all brands
 if($data == "getAllBrand"){
-	$sql = "SELECT *, (SELECT COUNT(*) FROM innopbbl_tienda.product as p WHERE p.id_cto_brand = b.id_brand ) as products FROM innopbbl_tienda.cto_brand as b;";
+	$sql = "SELECT *, (SELECT COUNT(*) FROM ".$bd.".product as p WHERE p.id_brand = b.id_brand ) as products FROM ".$bd.".cto_brand as b;";
 	
 	$result_json = "[";
 	$result = $conn->query($sql);
@@ -318,7 +318,7 @@ if($data == "createBrand"){
 
 // Get all categories
 if($data == "getAllCategory"){
-	$sql = "SELECT *, (SELECT COUNT(*) FROM innopbbl_tienda.product as p WHERE p.id_cto_product_category = c.id_cto_product_category ) as products FROM innopbbl_tienda.cto_product_category as c;";
+	$sql = "SELECT *, (SELECT COUNT(*) FROM ".$bd.".product as p WHERE p.id_cto_product_category = c.id_cto_product_category ) as products FROM ".$bd.".cto_product_category as c;";
 	
 	$result_json = "[";
 	$result = $conn->query($sql);

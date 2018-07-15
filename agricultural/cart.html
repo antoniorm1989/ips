@@ -18,21 +18,21 @@
             margin-bottom: 0px !important;
             border-radius: 0;
         }
-
+        
         body,
         html {
             height: 70%;
             background-color: #eee;
         }
-
+        
         .footer {
             color: black
         }
-
+        
         .active {
             display: flex !important;
         }
-
+        
         .confirmationForm {
             border: 2px solid black;
             border-radius: 25px 25px 25px 25px;
@@ -102,8 +102,8 @@
                         <tbody ng-repeat="p in cartList">
                             <tr>
                                 <td width="10%">
-
-                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="resources/img/products/{{p.photos[0]}}" />
+                                    
+                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="resources/img/products/{{p.photos[0]}}"/>
                                 </td>
                                 <td width="40%" style="vertical-align:middle">
                                     <div ng-click="onClickProductView(p)" style="cursor:pointer">
@@ -161,7 +161,7 @@
                         <tbody ng-repeat="p in cartList">
                             <tr>
                                 <td width="10%">
-                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="resources/img/products/{{p.photos[0]}}" />
+                                    <img class="img-responsive img-thumbnail" width="100" height="80" src="resources/img/products/{{p.photos[0]}}"/>
                                 </td>
                                 <td width="40%" style="vertical-align:middle">
                                     <div ng-click="onClickProductView(p)" style="cursor:pointer">
@@ -251,7 +251,7 @@
             right: 24px;
             cursor: pointer
         }
-
+        
         .fb-widget {
             background: #fff;
             z-index: 2;
@@ -268,12 +268,12 @@
             -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
             -o-box-shadow: 0 5px 40px rgba(0, 0, 0, .16)
         }
-
+        
         .fb-credit {
             text-align: center;
             margin-top: 8px
         }
-
+        
         .fb-credit a {
             transition: none;
             color: #bec2c9;
@@ -283,7 +283,7 @@
             border: 0;
             font-weight: 400
         }
-
+        
         .ctrlq.fb-overlay {
             z-index: 0;
             position: fixed;
@@ -295,7 +295,7 @@
             left: 0;
             background: rgba(0, 0, 0, .05);
         }
-
+        
         .ctrlq.fb-close {
             z-index: 4;
             padding: 0 6px;
@@ -306,7 +306,7 @@
             margin: 8px;
             border-radius: 3px;
         }
-
+        
         .ctrlq.fb-close::after {
             content: 'x';
             font-family: sans-serif;
@@ -653,6 +653,34 @@
 
                     });
 
+
+                    // Note: you can display a confirmation page before executing
+
+                    //var EXECUTE_PAYMENT_URL = 'ExecutePayment.php';
+
+                    /*paypal.request.post(EXECUTE_PAYMENT_URL,{ paymentID: data.paymentID, payerID: data.payerID })
+                        .then(function(data) { 
+                            console.log("entro" + data);      
+                        })
+                        .catch(function(err) { console.log(err) });
+    
+                        if (error === 'INSTRUMENT_DECLINED') {
+                            actions.restart();
+                        }*/
+
+
+                    // Optional: display a confirmation page here
+                    /*return actions.payment.execute().then(function (result) {
+
+                        bootbox.alert({
+                            message: 'Thank you for buy with us. IPS Motorsports.',
+                            size: 'small',
+                            callback: function () {
+                                window.location.href = "http://motorsports.innopartserv.com/index.html";
+                            }
+                        });
+
+                    });*/
                 },
 
                 onError: function (err) {
@@ -675,7 +703,7 @@
 
                 $http.get("backend/UpdatePayment.php?paymentId=" + this.paymentDetails.id + "&amount=" + JSON.stringify(amount))
                     .then(function (response) {
-
+                        debugger;
 
                         $scope.actions.payment.execute().then(function (result) {
 
@@ -686,28 +714,10 @@
                                     window.location.href = "http://motorsports.innopartserv.com/index.html";
                                 }
                             });
-
-                            debugger;
-                            //$scope.paymentDetails.payer.payer_info
-
-                            var name = "IPS Online Store"
-                                , mail = "sales@innopartserv.com"
-                                , subject = "Shop alert"
-                                , message = "Un producto ha sido comprado.";
-
-                            $http.get("backend/send_email.php?name=" + name + "&&mail=" + mail + "&&message=" + message + "&&subject=" + subject)
-                                .then(function (response) {
-                                    if (response.data == "success") {
-                                        console.log('The mail shop is send.')
-                                    } else {
-                                        console.log('The mail shop is not send.')
-                                    }
-                                });
-
                         });
 
                     });
-
+                    
             }
         });
 
