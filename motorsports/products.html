@@ -63,7 +63,7 @@
 
         .list-products {
             position: absolute;
-            top: 130px;
+            top: 120px;
             left: 27%;
             width: 94%;
             z-index: 5;
@@ -189,7 +189,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><b>Category</b></a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><b>Category</b>
+                                        <i class="fa fa-chevron-circle-down" aria-hidden="true" style="float: right;"></i>
+                                    </a>
                                 </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse in">
@@ -216,7 +218,9 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><b>Brand</b></a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><b>Brand</b>
+                                        <i class="fa fa-chevron-circle-down" aria-hidden="true" style="float: right;"></i>
+                                    </a>
                                 </h4>
                             </div>
                             <div id="collapse2" class="panel-collapse collapse in">
@@ -294,7 +298,6 @@
                         <div class="row center-filters" style="border-top: solid 1px black;">
 
                             <div class="col-sm-12">
-                                <b>Filters</b>
                                 <span class="badge badge-pill badge-default" ng-repeat="c in allCategories" ng-hide="! c.checked">
                                         {{c.description}}
                                         <i style="cursor: pointer;" class="fa fa-times" aria-hidden="true" ng-click="onRemoveFilter('category',c)"></i>
