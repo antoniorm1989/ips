@@ -15,115 +15,150 @@
 
 
     <style>
-        navbar {
-            margin-bottom: 0px !important;
-            border-radius: 0;
+         :root {
+            --first-bg-color: #A01D26;
+            --second-bg-color: #ACBEBE;
+            --third-bg-color: #20232A;
+            --fourth-bg-color: #F4F4EF;
+        }
+
+        body {
+            background-color: var(--fourth-bg-color);
+        }
+
+        .navbar{
+            background-color: var(--third-bg-color);
+            border-color: var(--third-bg-color);
+        }
+
+        .navbar-brand {
+            height: 80px;
+        }
+
+        .nav>li>a {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .navbar-toggle {
+            padding: 10px;
+            margin: 25px 15px 25px 0;
         }
 
         body,
         html {
-            height: 70%;
-            background-color: #eee;
+            height: 100%;
         }
 
         .carousel-inner>.item>img,
         .carousel-inner>.item>a>img {
+            width: 50%;
             margin: auto;
-        }
-
-        .footer {
-            color: black
         }
 
         .active {
             display: flex !important;
         }
 
-        .image-brand {
-            margin: 0px 20px;
-            width: 150px;
-            height: 100px;
-            cursor: pointer;
+        .jumbotron {
+            background-color: var(--second-bg-color);
         }
 
-        .image-brand:hover {
-            opacity: .5;
+        html {
+            background: url(resources/img/metal-background.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .footer {
+            color: black;
+            background-color: var(--second-bg-color);
+        }
+
+        h1 {
+            font-size: 20px;
+            text-transform: uppercase;
+            color: var(--first-bg-color);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            margin-top: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'montserratbold';
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'montserratbold';
+            font-weight: normal;
+            letter-spacing: 1.5px;
+        }
+
+        html,
+        body {
+            font-weight: 400;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            padding: 10px 0px 10px 0px;
+            background-color: var(--first-bg-color);
+            border-radius: 5px;
         }
     </style>
 </head>
 
-<body ng-app="myApp" ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="myCtrl" style="background-color: transparent;">
 
-
-    <div class="jumbotron" style="padding: 0px;margin: 0px;background-image: url(resources/img/banner.png);background-repeat: no-repeat, repeat;background-size: cover;">
-        <div class="container text-center">
-            <center>
-                <img src="resources/img/logo_nuevo.PNG" class="img-responsive img-rounded" alt="logo" style="width: 20%;float: left;">
-            </center>
-        </div>
-    </div>
-
-
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container" style="padding-left: 0px;">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>                        
+                    <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">
-                    <img alt="Brand" src="resources/img/logo_nuevo.PNG" class="img-circle" alt="IPS Logo" width="35" height="35">
+                <a class="navbar-brand" href="index.html">
+                    <img src="resources/img/logo principal agricultura.png" alt="" style="margin: -3% 0% 0% 0%; height: 70px; width: 350px;">
                 </a>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="about.html">About us</a></li>
-                    <li><a href="support.html">Support</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>-->
-                    <li><a href="cart.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart ({{cartLength}})</a></li>
+            <div id="navbar3" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" style="margin-left: 10%;">
+                    <li class="active"><a href="index.html"><b>Home</b></a></li>
+                    <li><a href="products.html"><b>Products</b></a></li>
+                    <li><a href="about.html"><b>About us</b></a></li>
+                    <li><a href="contact.html"><b>Contact</b></a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
 
-
     <!-- seccion slider -->
-    <div class="container-fluid" style="background-color: red;  padding: 20px; margin-top: -25px">
+    <div class="container-fluid" style="padding: 20px; margin-top: -25px">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="5"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="6"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="7"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="8"></li>
-            </ol>
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="resources/img/slider_0.jpg" alt="...">
-                </div>
-                <div class="item">
                     <img src="resources/img/slider_1.jpg" alt="...">
                 </div>
                 <div class="item">
                     <img src="resources/img/slider_2.jpg" alt="...">
                 </div>
-                <!--<div class="item">
-                    <img src="resources/img/slider_3.jpg" alt="...">
-                </div>-->
+                <div class="item">
+                    <img src="resources/img/slider_3.png" alt="...">
+                </div>
                 <div class="item">
                     <img src="resources/img/slider_4.jpg" alt="...">
                 </div>
@@ -133,16 +168,6 @@
                 <div class="item">
                     <img src="resources/img/slider_6.jpg" alt="...">
                 </div>
-                <div class="item">
-                    <img src="resources/img/slider_7.jpg" alt="...">
-                </div>
-                <div class="item">
-                    <img src="resources/img/slider_8.jpg" alt="...">
-                </div>
-                <div class="item">
-                    <img src="resources/img/slider_9.jpg" alt="...">
-                </div>
-
             </div>
 
             <!-- Controls -->
@@ -158,51 +183,53 @@
     </div>
 
 
-    <!-- seccion brands-->
-    <div class="container-fluid" style="padding: 20px">
-        <center>
-            <div class="row" style="width: 100%;">
-                <div ng-repeat="b in brands" class="col-lg-3 col-sm-3 col-xs-3">
-                    <img ng-click="addFilterBrand(b.id_brand)" class="image-brand img-responsive img-thumbnail" src="resources/img/brands/{{b.photos[0]}}">
-                    <br/>
-                    <a href={{b.website}}>{{b.description}}</a>
-                    <br/>
-                    <p/>
-                </div>
-            </div>
-        </center>
-    </div>
+    <!-- seccion de brands-->
+    <center>
 
-
-    <!-- seccion videos -->
-
-    <!--Carousel Wrapper-->
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color: red; padding: 20px">
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <iframe style="margin: auto;" width="600" height="400" src="https://www.youtube.com/embed/mMgcnBvOMAQ?autoplay=0">
-                </iframe>
-            </div>
+        <div class="section-title text-center">
+            <h1><b>Our custom parts will save you money</b></h1>
+            <h2><b>View Our Custom Part Categories</b></h2>
         </div>
 
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+        <div class="container-fluid" style="padding: 20px">
+            <center>
+                <div class="row" style="width: 100%;">
+                    <div ng-repeat="c in categories" class="col-lg-4 col-sm-4 col-xs-12">
+                        <div class="card" style="margin-top: 20px">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-xs-6">
+                                    <img style="height:100px; width:100px;" class="image-brand img-responsive img-thumbnail" src="resources/img/categories/{{c.photos[0]}}">
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-6" style="color:var(--fourth-bg-color);text-align: left;">
+                                    <b style="color: var(--fourth-bg-color);">{{c.description}}</b>
+                                    <p/>
+                                    </br>
+                                    <b style="color: var(--third-bg-color);">
+                                        <a href="#" ng-click="addFilterBrand(c.id_cto_product_category)">
+                                            Click here to view our full line.
+                                        </a>
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+    </center>
+
+
+    <center>
+        <iframe style="margin: 80px;" width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLXmQ8DxdtCleAtKDsrP5YTiALOqVFIkvh&autoplay=1"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </center>
 
 
 
     <script>
         $('#myCarousel').carousel({
-            interval: 2000
+            interval: 4000
         })
 
         $('.carousel .item-slider').each(function () {
@@ -223,181 +250,100 @@
         });
     </script>
 
-    <footer class="container-fluid text-center footer" style="padding: 20px">
-        <div class="row">
-            <div class="col-sm-4">
-                <a href="https://www.facebook.com/IPSmotorsports/">
-                    <i class="fa fa-facebook-square  fa-4x" aria-hidden="true" style="color: #3b5998"></i>
-                </a>
-                <a href="https://www.youtube.com/channel/UC61XvEcBLIAAW72al2WMmew">
-                	<i class="fa fa-youtube-play  fa-4x" aria-hidden="true" style="color: red"></i>
-                </a>
-                <a href="https://www.instagram.com/ipsmotorsports/">
-                    <i class="fa fa-instagram  fa-4x" aria-hidden="true" style="color: #517fa4"></i>
-                </a>
 
-            </div>
-            <div class="col-sm-4">
-                <h4><b>All prices are in USD Copyright 2017 IPS</b>
-                    <h4/>
-            </div>
-            <div class="col-sm-4">
-                <center>
-                    <img src="resources/img/credit-cards-logos.png" class="img-responsive img-rounded" alt="logo" width="304" height="236">
-                </center>
-            </div>
-        </div>
-    </footer>
+    <div class="container">
 
-    <style>
-        .fb-livechat,
-        .fb-widget {
-            display: none
-        }
 
-        .ctrlq.fb-button,
-        .ctrlq.fb-close {
-            position: fixed;
-            right: 24px;
-            cursor: pointer
-        }
-
-        .ctrlq.fb-button {
-            z-index: 1;
-            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyOCAxMjgiIGhlaWdodD0iMTI4cHgiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjggMTI4IiB3aWR0aD0iMTI4cHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxnPjxyZWN0IGZpbGw9IiMwMDg0RkYiIGhlaWdodD0iMTI4IiB3aWR0aD0iMTI4Ii8+PC9nPjxwYXRoIGQ9Ik02NCwxNy41MzFjLTI1LjQwNSwwLTQ2LDE5LjI1OS00Niw0My4wMTVjMCwxMy41MTUsNi42NjUsMjUuNTc0LDE3LjA4OSwzMy40NnYxNi40NjIgIGwxNS42OTgtOC43MDdjNC4xODYsMS4xNzEsOC42MjEsMS44LDEzLjIxMywxLjhjMjUuNDA1LDAsNDYtMTkuMjU4LDQ2LTQzLjAxNUMxMTAsMzYuNzksODkuNDA1LDE3LjUzMSw2NCwxNy41MzF6IE02OC44NDUsNzUuMjE0ICBMNTYuOTQ3LDYyLjg1NUwzNC4wMzUsNzUuNTI0bDI1LjEyLTI2LjY1N2wxMS44OTgsMTIuMzU5bDIyLjkxLTEyLjY3TDY4Ljg0NSw3NS4yMTR6IiBmaWxsPSIjRkZGRkZGIiBpZD0iQnViYmxlX1NoYXBlIi8+PC9zdmc+) center no-repeat #0084ff;
-            width: 60px;
-            height: 60px;
-            text-align: center;
-            bottom: 24px;
-            border: 0;
-            outline: 0;
-            border-radius: 60px;
-            -webkit-border-radius: 60px;
-            -moz-border-radius: 60px;
-            -ms-border-radius: 60px;
-            -o-border-radius: 60px;
-            box-shadow: 0 1px 6px rgba(0, 0, 0, .06), 0 2px 32px rgba(0, 0, 0, .16);
-            -webkit-transition: box-shadow .2s ease;
-            background-size: 80%;
-            transition: all .2s ease-in-out
-        }
-
-        .ctrlq.fb-button:focus,
-        .ctrlq.fb-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, .09), 0 4px 40px rgba(0, 0, 0, .24)
-        }
-
-        .fb-widget {
-            background: #fff;
-            z-index: 2;
-            position: fixed;
-            width: 360px;
-            overflow: hidden;
-            opacity: 0;
-            bottom: 0;
-            right: 24px;
-            border-radius: 6px;
-            -o-border-radius: 6px;
-            -webkit-border-radius: 6px;
-            box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
-            -webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
-            -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
-            -o-box-shadow: 0 5px 40px rgba(0, 0, 0, .16)
-        }
-
-        .fb-credit {
-            text-align: center;
-            margin-top: 8px
-        }
-
-        .fb-credit a {
-            transition: none;
-            color: #bec2c9;
-            font-family: Helvetica, Arial, sans-serif;
-            font-size: 12px;
-            text-decoration: none;
-            border: 0;
-            font-weight: 400
-        }
-
-        .ctrlq.fb-overlay {
-            z-index: 0;
-            position: fixed;
-            height: 100vh;
-            width: 100vw;
-            -webkit-transition: opacity .4s, visibility .4s;
-            transition: opacity .4s, visibility .4s;
-            top: 0;
-            left: 0;
-            background: rgba(0, 0, 0, .05);
-            display: none
-        }
-
-        .ctrlq.fb-close {
-            z-index: 4;
-            padding: 0 6px;
-            background: #365899;
-            font-weight: 700;
-            font-size: 11px;
-            color: #fff;
-            margin: 8px;
-            border-radius: 3px
-        }
-
-        .ctrlq.fb-close::after {
-            content: 'x';
-            font-family: sans-serif
-        }
-    </style>
-
-    <div class="fb-livechat">
-        <div class="ctrlq fb-overlay"></div>
-        <div class="fb-widget">
-            <div class="ctrlq fb-close"></div>
-            <div class="fb-page" data-href="https://www.facebook.com/IPSmotorsports/" data-tabs="messages" data-width="360" data-height="400"
-                data-small-header="true" data-hide-cover="true" data-show-facepile="false">
-                <blockquote cite="https://www.facebook.com/IPSmotorsports/" class="fb-xfbml-parse-ignore"> </blockquote>
-            </div>
-
-        </div>
-        <a href="https://m.me/IPSmotorsports" title="Send us a message on Facebook" class="ctrlq fb-button"></a>
     </div>
 
-    <script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () { var t = { delay: 125, overlay: $(".fb-overlay"), widget: $(".fb-widget"), button: $(".fb-button") }; setTimeout(function () { $("div.fb-livechat").fadeIn() }, 8 * t.delay), $(".ctrlq").on("click", function (e) { e.preventDefault(), t.overlay.is(":visible") ? (t.overlay.fadeOut(t.delay), t.widget.stop().animate({ bottom: 0, opacity: 0 }, 2 * t.delay, function () { $(this).hide("slow"), t.button.show() })) : t.button.fadeOut("medium", function () { t.widget.stop().show().animate({ bottom: "30px", opacity: 1 }, 2 * t.delay), t.overlay.fadeIn(t.delay) }) }) });
-    </script>
 
+    <footer class="container-fluid text-center footer" style="padding: 20px">
+        <div class="row">
+            <div class="col-sm-3">
+                <h1><b>Business Hours</b></h1>
+                <b>Monday - Friday - 8:00 - 5:00 PM CST</b><br>
+                <b>Saturday - Sunday - Closed</b>
+            </div>
+            <div class="col-sm-3">
+
+                <h1><b> Quick Links</b></h1>
+
+                <a href="https://www.facebook.com/InnovationsPartService/">
+                    <i class="fa fa-facebook-square fa-2x" aria-hidden="true" style="color: #3b5998"></i>
+                    <kbd>Facebook</kbd>
+                </a>
+                </br>
+                <a href="#">
+                    <i class="fa fa-youtube-play fa-2x" aria-hidden="true" style="color: red"></i>
+                    <kbd>Youtube</kbd>
+                </a>
+                </br>
+                <a href="#">
+                    <i class="fa fa-instagram fa-2x" aria-hidden="true" style="color: #517fa4"></i>
+                    <kbd>Instagram</kbd>
+                </a>
+            </div>
+            <div class="col-sm-6">
+                <h1><b>Our Office</b></h1>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <address>
+                            <strong>Addres</strong><br/> P.O. BOX 25954 <br/> Yuma AZ 85367 <br/> 425 N Main St #729</br>
+                            Salinas CA 93901
+                        </address>
+                    </div>
+                    <div class="col-sm-6">
+                        <address>
+                            <strong>Phone</strong><br/> (800)-715-6201, Ext:205, Ext(español): 215</br>
+                            <strong>E-Mail</strong><br/>
+                            <a href="mailto:sales@innopartserv.com">sales@innopartserv.com</a>
+                            <a href="mailto:sales@innopartserv.com">info@innopartserv.com</a>
+                        </address>
+                    </div>
+                </div>
+
+            </div>
+    </footer>
 
 
     <script>
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope, $http) {
 
-            $scope.brands = [];
-
-            if (!sessionStorage.getItem("cart")) {
-                sessionStorage.setItem("cart", '[]');
-            }
-
-            $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
+            $scope.categories = [];
 
             // Click de los filtros de las marcas
-            $scope.addFilterBrand = function (id_brand) {
-                window.location.href = "products.html?brand=" + id_brand;
+            $scope.addFilterBrand = function (categoryId) {
+                window.location.href = "products.html?category=" + categoryId;
             }
 
-            $http.get("backend/bd_products.php?data=brand")
+            $http.get("backend/bd_products.php?data=categoria")
                 .then(function (response) {
                     if (response.data) {
-                        $scope.brands = response.data;
+                        $scope.categories = response.data;
                     }
                 });
+
         });
     </script>
 
+
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat" attribution=setup_tool page_id="147665135786499" theme_color="#fa3c4c">
+    </div>
 
 
 </body>

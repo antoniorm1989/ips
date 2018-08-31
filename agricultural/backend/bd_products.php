@@ -60,7 +60,7 @@ if($data == "categoria"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json."{\"id_cto_product_category\":\"".$row["id_cto_product_category"]."\",\"description\":\"".$row["description"]."\"},";
+	        $result_json = $result_json."{\"id_cto_product_category\":\"".$row["id_cto_product_category"]."\",\"description\":\"".$row["description"]."\",\"photos\":".$row["photos"]."},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;

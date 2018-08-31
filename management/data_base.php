@@ -349,7 +349,7 @@ if($data == "getCategoryById"){
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        $result_json = $result_json."{\"id_category\":\"".$row["id_cto_product_category"]."\",\"description\":\"".$row["description"]."\"},";
+	        $result_json = $result_json."{\"id_category\":\"".$row["id_cto_product_category"]."\",\"description\":\"".$row["description"]."\", \"photos\":".$row["photos"]."},";
 	    }
 	    $result_json = substr($result_json, 0, -1)."]";
 	    echo $result_json;
@@ -368,8 +368,9 @@ if($data == "createCategory"){
      
      $id_category= $request->id_category;
      $description = addslashes($request->description);
+     $photos= $request->photosJson; 
  
-    $sql = "INSERT INTO ".$bd.".cto_product_category ( description) VALUES ('$description');";
+    $sql = "INSERT INTO ".$bd.".cto_product_category (description, photos) VALUES ('$description', '$photos');";
  
    if ($conn->query($sql) === TRUE) {
        echo "New record created successfully";
@@ -395,7 +396,9 @@ if($data == "createCategory"){
      $photos= $request->photosJson; 
      
     $sql = "UPDATE ".$bd.".cto_product_category SET"
+    . " photos='$photos',"
     . " description = '$description'"
+    
     . " WHERE id_cto_product_category=$id_category;";
     
    echo $sql;

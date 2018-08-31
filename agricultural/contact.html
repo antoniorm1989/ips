@@ -9,14 +9,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
-        /* Remove the navbar's default rounded borders and increase the bottom margin */
-        
-        .navbar {
-            margin-bottom: 50px;
-            border-radius: 0;
+         :root {
+            --first-bg-color: #A01D26;
+            --second-bg-color: #ACBEBE;
+            --third-bg-color: #20232A;
+            --fourth-bg-color: #F4F4EF;
+        }
+
+        body {
+            background-color: var(--fourth-bg-color);
+        }
+
+        .navbar{
+            background-color: var(--third-bg-color);
+            border-color: var(--third-bg-color);
+        }
+
+        .navbar-brand {
+            height: 80px;
+        }
+
+        .nav>li>a {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .navbar-toggle {
+            padding: 10px;
+            margin: 25px 15px 25px 0;
         }
         /* Remove the jumbotron's default bottom margin */
-        
+
         .jumbotron {
             margin-bottom: 0;
             background-color: #cccccc;
@@ -25,12 +48,12 @@
             background-size: cover;
         }
         /* Add a gray background color and some padding to the footer */
-        
+
         footer {
             background-color: #f2f2f2;
             padding: 25px;
         }
-        
+
         body,
         html {
             height: 100%;
@@ -45,42 +68,29 @@
 
     <div ng-app="myApp" ng-controller="myCtrl">
 
-        <div class="jumbotron" style="padding: 0px; margin: 0px;">
-            <div class="container text-center">
-                <center>
-                    <img src="resources/img/logo_nuevo.PNG" class="img-responsive img-rounded" alt="logo" width="250" height="100">
-                </center>
-            </div>
-        </div>
-
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container" style="padding-left: 0px;">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-                    <a class="navbar-brand" href="#">
-                        <img alt="Brand" src="resources/img/logo_nuevo.PNG" class="img-circle" alt="IPS Logo" width="35" height="35">
-                    </a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                    <a class="navbar-brand" href="index.html">
+                                        <img src="resources/img/logo principal agricultura.png" alt="" style="margin: -3% 0% 0% 0%; height: 70px; width: 350px;">
+                                    </a>
                 </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="support.html">Support</a></li>
-                        <li class="active"><a href="contact.html">Contact</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>-->
-                        <li><a href="cart.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart ({{cartLength}})</a></li>
+                <div id="navbar3" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" style="margin-left: 10%;">
+                        <li><a href="index.html"><b>Home</b></a></li>
+                        <li><a href="products.html"><b>Products</b></a></li>
+                        <li><a href="about.html"><b>About us</b></a></li>
+                        <li class="active"><a href="contact.html"><b>Contact</b></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-
 
 
         <div class="container">
@@ -91,8 +101,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">
-                                Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Enter name" required="required" ng-model="name" />
+                                        Full Name
+                                    </label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter full name" required="required" ng-model="name" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">
+                                            Phone number
+                                        </label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter phone number" required="required" ng-model="name" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">
+                                                Company name
+                                            </label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter company name" required="required" ng-model="name" />
                                 </div>
                                 <div class="form-group">
                                     <label for="email">
@@ -110,14 +133,18 @@
                                 <option value="service">General Customer Service</option>
                                 <option value="suggestions">Suggestions</option>
                                 <option value="product">Product Support</option>
+                                <option value="product">Make an Order</option>
+                                <option value="product">Open Account</option>
                             </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">
-                                Message</label>
-                                    <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Message" ng-model="message"></textarea>
+                                        Comments or questions
+                                    </label>
+                                    <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Comments or questions"
+                                        ng-model="message"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -131,8 +158,13 @@
                     <form>
                         <legend><span class="glyphicon glyphicon-globe"></span> Our office</legend>
                         <address>
-                            <strong>IPS Motorsports</strong><br> 1900 S. FACTOR AVENUE SUITE #1 <br> YUMA AZ 85365<br> Phone:
-                            (800)-715-6201 Ext:205<br> Fax: (928)-569-3251
+                            <h4><strong>Innovations Parts Service, LLC</strong></h4>
+                            P.O. BOX 25954 <br/> Yuma AZ 85367 <br/> 425 N Main St #729</br>
+                            Salinas CA 93901<br/>
+                            <!--1900 S. FACTOR AVENUE SUITE #1 <br> YUMA AZ 85365<br> -->
+                            <b>Phone:</b> (800)-715-6201</br>
+                            Sales Ext:205 <br> Español Ext: 215 </br>
+                            <b>Fax:</b> (928)-569-3251
                         </address>
                         <address>
                             <strong>E-Mail</strong><br>
@@ -158,12 +190,6 @@
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function ($scope, $http) {
 
-            if (!sessionStorage.getItem("cart")) {
-                sessionStorage.setItem("cart", '[]');
-            }
-
-            $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
-
             $scope.name = "";
             $scope.mail = "";
             $scope.message = "";
@@ -173,7 +199,7 @@
                     .then(function (response) {
                         if (response.data == "success") {
                             alert("your email was sent successfully");
-                            window.location.assign("http://motorsports.innopartserv.com/index.html")
+                            window.location.assign("http://innopartserv.com/index.html")
                         } else {
                             alert("Something is wrong...");
                         }
@@ -181,7 +207,6 @@
             }
 
         });
-
     </script>
 
 </body>
