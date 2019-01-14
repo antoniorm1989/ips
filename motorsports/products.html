@@ -63,7 +63,7 @@
 
         .list-products {
             position: absolute;
-            top: 130px;
+            top: 120px;
             left: 27%;
             width: 94%;
             z-index: 5;
@@ -189,7 +189,10 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><b>Category</b></a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" ng-click="onCategoryClick(allCategories, allBrands)"><b>Category</b>
+                                        <i data-toggle="collapse" data-parent="#accordion" href="#collapse1" ng-if="!allCategories.expand" class="fa fa-plus-square" aria-hidden="true" style="float: right;"></i>
+                                        <i data-toggle="collapse" data-parent="#accordion" href="#collapse1" ng-if="allCategories.expand" class="fa fa-minus-square" aria-hidden="true" style="float: right;"></i>
+                                    </a>
                                 </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse in">
@@ -216,10 +219,13 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><b>Brand</b></a>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" ng-click="onCategoryClick(allBrands, allCategories)"><b>Brand</b>
+                                        <i data-toggle="collapse" data-parent="#accordion" href="#collapse2" ng-if="!allBrands.expand" class="fa fa-plus-square" aria-hidden="true" style="float: right;"></i>
+                                        <i data-toggle="collapse" data-parent="#accordion" href="#collapse2" ng-if="allBrands.expand" class="fa fa-minus-square" aria-hidden="true" style="float: right;"></i>
+                                    </a>
                                 </h4>
                             </div>
-                            <div id="collapse2" class="panel-collapse collapse in">
+                            <div id="collapse2" class="panel-collapse collapse">
                                 <div class="panel-body">
 
                                     <table style="width:100%; table-layout: fixed;">
@@ -294,7 +300,6 @@
                         <div class="row center-filters" style="border-top: solid 1px black;">
 
                             <div class="col-sm-12">
-                                <b>Filters</b>
                                 <span class="badge badge-pill badge-default" ng-repeat="c in allCategories" ng-hide="! c.checked">
                                         {{c.description}}
                                         <i style="cursor: pointer;" class="fa fa-times" aria-hidden="true" ng-click="onRemoveFilter('category',c)"></i>
@@ -509,6 +514,8 @@
                         }
                         return brand;
                     });
+
+                    $scope.allBrands.expand = false;
                 });
                 $scope.allProducts.filter(function (product) {
                     return brands.includes(product.id_brand) || brands.length == 0;
@@ -520,6 +527,8 @@
                         }
                         return category;
                     });
+
+                    $scope.allCategories.expand = true;
                 });
 
                 // Update products
@@ -571,6 +580,16 @@
 
 
             //Events
+
+            $scope.onCategoryClick = function (categories, secondCategories){
+                if(categories.expand){
+                    categories.expand = false;
+                }else{
+                    categories.expand = true;
+                    secondCategories.expand = false;
+                }
+            },
+
             $scope.onClickPage = function (page) {
 
                 if (page < 0) {

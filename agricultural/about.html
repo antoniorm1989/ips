@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>IPS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <style>
+         :root {
+            --first-bg-color: #A01D26;
+            --second-bg-color: #ACBEBE;
+            --third-bg-color: #20232A;
+            --fourth-bg-color: #F4F4EF;
+        }
+
+        .navbar {
+            background-color: var(--third-bg-color);
+            border-color: var(--third-bg-color);
+        }
+
+        body {
+            background-color: var(--fourth-bg-color);
+        }
+
+        .navbar-brand {
+            height: 80px;
+        }
+
+        .nav>li>a {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .navbar-toggle {
+            padding: 10px;
+            margin: 25px 15px 25px 0;
+        }
+        /* Remove the jumbotron's default bottom margin */
+
+        .jumbotron {
+            margin-bottom: 0;
+            background-color: #cccccc;
+            background-position: center;
+            background-repeat: repeat;
+            background-size: cover;
+        }
+        /* Add a gray background color and some padding to the footer */
+
+        .footer {
+            color: black;
+            background-color: var(--second-bg-color);
+        }
+
+        body,
+        html {
+            height: 100%;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'montserratbold';
+            font-weight: normal;
+            letter-spacing: 1.5px;
+        }
+
+        h1 {
+            font-size: 20px;
+            text-transform: uppercase;
+            color: var(--first-bg-color);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            margin-top: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'montserratbold';
+        }
+    </style>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+
+<body>
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container" style="width:100%;">
+                <div class="navbar-header col-lg-7 col-sm-7 col-xs-12" style="display: flex;">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                    <a class="navbar-brand" href="index.html">
+                                <img src="resources/img/logo-nuevo.png" style="width: 100%;">
+                            </a>
+                </div>
+                <div id="navbar3" class="navbar-collapse collapse col-lg-5 col-sm-5 col-xs-12">
+                    <ul class="nav navbar-nav">
+                        <li><a href="../index.html"><b>Home</b></a></li>
+                        <li><a href="products.html"><b>Products</b></a></li>
+                        <li class="active"><a href="about.html"><b>About us</b></a></li>
+                        <li><a href="contact.html"><b>Contact</b></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="container" style="
+        background-color: var(--third-bg-color);
+        border-radius: 28px;
+        opacity: .9;
+        height: 70%;
+        margin: 50px auto;
+        color: white;
+        padding : 30px;
+        ">
+            <center>
+                <h2 style="margin-top:20px">Innovations Parts Service, LLC</h2>
+            </center>
+
+            <h4 style="margin: 40px 30px 0px 30px;text-align: justify;">
+                Innovations Parts Service,LLC was established in 2014 and has been delivering high quality MRO parts ever since. We have
+                strong relationships with many manufacturers that allow us to get our clients high quality parts at competitive
+                prices. Our in-house engeneers can have modifications done to work for the end-user in short time notice
+                giving them the most reliable service we can offer. We also have stocking programs that allow us to do same
+                day deliveries. Our goal is to provide the greatest expirience in the parts and service industry to maximize
+                our clients satisfaction.
+            </h4>
+
+            <center>
+                <img src="resources/img/logo principal agricultura.png" style="margin-top:20px" class="img-responsive img-rounded" alt="logo"
+                    width="250" height="100">
+            </center>
+        </div>
+
+
+
+
+
+        <footer class="container-fluid text-center footer" style="padding: 20px">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h1><b>Business Hours</b></h1>
+                    <b>Monday - Friday - 8:00 - 5:00 PM CST</b><br>
+                    <b>Saturday - Sunday - Closed</b>
+                </div>
+                <div class="col-sm-3">
+                    <h1><b> Quick Links</b></h1>
+
+                    <a href="https://www.facebook.com/InnovationsPartService/">
+                            <i class="fa fa-facebook-square fa-2x" aria-hidden="true" style="color: #3b5998"></i>
+                            <kbd>Facebook</kbd>
+                        </a>
+                    </br>
+                    <a href="#">
+                            <i class="fa fa-youtube-play fa-2x" aria-hidden="true" style="color: red"></i>
+                            <kbd>Youtube</kbd>
+                        </a>
+                    </br>
+                    <a href="#">
+                            <i class="fa fa-instagram fa-2x" aria-hidden="true" style="color: #517fa4"></i>
+                            <kbd>Instagram</kbd>
+                        </a>
+                </div>
+                <div class="col-sm-6">
+                    <h1><b>Our Office</b></h1>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <address>
+                                <strong>Addres</strong><br/> P.O. BOX 25954 <br/> Yuma AZ 85367 <br/> 425 N Main St #729</br>
+                                Salinas CA 93901
+                            </address>
+                        </div>
+                        <div class="col-sm-6">
+                            <address>
+                                <strong>Phone</strong><br/> (800)-715-6201, Ext:205, Ext(español): 215</br>
+                                <strong>E-Mail</strong><br/>
+                                <a href="mailto:sales@innopartserv.com">sales@innopartserv.com</a>
+                                <a href="mailto:sales@innopartserv.com">info@innopartserv.com</a>
+                            </address>
+                        </div>
+                    </div>
+
+                </div>
+
+                <center>Copyright © 2018 Innovations Parts Service LLC | Website Design By kenze Systems</center>
+        </footer>
+
+        </div>
+
+
+        <script>
+            var app = angular.module('myApp', []);
+            app.controller('myCtrl', function ($scope, $http) {
+
+                $scope.name = "";
+                $scope.mail = "";
+                $scope.message = "";
+                $scope.subject = "";
+                $scope.sendMessage = function () {
+                    $http.get("send_email.php?name=" + $scope.name + "&&mail=" + $scope.mail + "&&message=" + $scope.message + "&&subject=" + $scope.subject)
+                        .then(function (response) {
+                            if (response.data == "success") {
+                                alert("your email was sent successfully");
+                                window.location.assign("http://innopartserv.com/index.html")
+                            } else {
+                                alert("Something is wrong...");
+                            }
+                        });
+                }
+
+            });
+        </script>
+
+</body>
+
+</html>

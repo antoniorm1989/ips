@@ -2,8 +2,9 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
     <title>IPS</title>
-    <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -11,19 +12,34 @@
     <link rel="stylesheet" href="resources/lib/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <style>
-        /* Remove the navbars default rounded borders and increase the bottom margin */
-        
+         :root {
+            --first-bg-color: #A01D26;
+            --second-bg-color: #ACBEBE;
+            --third-bg-color: #20232A;
+            --fourth-bg-color: #F4F4EF;
+        }
+
+        body {
+            background-color: var(--fourth-bg-color);
+        }
+
         .navbar {
             margin-bottom: 50px;
             border-radius: 0;
+            background-color: var(--third-bg-color);
+            border-color: var(--third-bg-color);
+        }
+
+        .navbar-brand {
+            height: 80px;
         }
         /* Remove the jumbotrons default bottom margin */
-        
+
         .jumbotron {
             margin-bottom: 0;
         }
         /* Add a gray background color and some padding to the footer */
-        
+
         footer {
             background-color: #f2f2f2;
             padding: 25px;
@@ -31,7 +47,7 @@
         /* IMAGEN DETALLE */
         /* The Modal (background) */
         /* The Close Button */
-        
+
         .close {
             color: white;
             position: absolute;
@@ -40,27 +56,27 @@
             font-size: 35px;
             font-weight: bold;
         }
-        
+
         .close:hover,
         .close:focus {
             color: #999;
             text-decoration: none;
             cursor: pointer;
         }
-        
+
         .cursor {
             cursor: pointer
         }
-        
+
         .active,
         .demo:hover {
             opacity: 1;
         }
-        
+
         img.hover-shadow {
             transition: 0.3s
         }
-        
+
         .hover-shadow:hover {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
         }
@@ -75,30 +91,25 @@
 <body>
     <div ng-app="myApp" ng-controller="myCtrl">
 
-        <!-- Menu -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 0px !important;">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>                        
-                    </button>
-                    <a class="navbar-brand" href="#">
-                        <img alt="Brand" src="resources/img/logo_nuevo.PNG" class="img-circle" alt="IPS Logo" width="35" height="35">
-                    </a>
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container" style="width:100%;">
+                <div class="navbar-header col-lg-7 col-sm-7 col-xs-12" style="display: flex;">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                    <a class="navbar-brand" href="index.html">
+                                <img src="resources/img/logo-nuevo.png" style="width: 100%;">
+                            </a>
                 </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
+                <div id="navbar3" class="navbar-collapse collapse col-lg-5 col-sm-5 col-xs-12">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active"><a href="products.html">Products</a></li>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="support.html">Support</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>-->
-                        <li><a href="cart.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart ({{cartLength}})</a></li>
+                        <li><a href="../index.html"><b>Home</b></a></li>
+                        <li class="active"><a href="products.html"><b>Products</b></a></li>
+                        <li><a href="about.html"><b>About us</b></a></li>
+                        <li><a href="contact.html"><b>Contact</b></a></li>
                     </ul>
                 </div>
             </div>
@@ -116,8 +127,7 @@
                                 <div class="col-sm-4 col-lg-4 col-xs-12">
 
                                     <center>
-                                        <img id="mainImage" height="300" width="300" src="resources/img/products/{{product.photos[0]}}"
-                                        />
+                                        <img id="mainImage" height="300" width="300" src="resources/img/products/{{product.photos[0]}}" />
                                         <br/>
                                         <img style="margin: 10px;" ng-repeat="photo in product.photos" ng-click="changeImage(photo)" height="50" width="50" src="resources/img/products/{{product.photos[0]}}"
                                         />
@@ -199,215 +209,260 @@
             </div>
         </div>
 
-        <footer class="container-fluid text-center">
-            <p>Online Store Copyright</p>
+        <footer class="container-fluid text-center footer" style="padding: 20px">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h1><b>Business Hours</b></h1>
+                    <b>Monday - Friday - 8:00 - 5:00 PM CST</b><br>
+                    <b>Saturday - Sunday - Closed</b>
+                </div>
+                <div class="col-sm-3">
+
+                    <h1><b> Quick Links</b></h1>
+
+                    <a href="https://www.facebook.com/InnovationsPartService/">
+                            <i class="fa fa-facebook-square fa-2x" aria-hidden="true" style="color: #3b5998"></i>
+                            <kbd>Facebook</kbd>
+                        </a>
+                    </br>
+                    <a href="#">
+                            <i class="fa fa-youtube-play fa-2x" aria-hidden="true" style="color: red"></i>
+                            <kbd>Youtube</kbd>
+                        </a>
+                    </br>
+                    <a href="#">
+                            <i class="fa fa-instagram fa-2x" aria-hidden="true" style="color: #517fa4"></i>
+                            <kbd>Instagram</kbd>
+                        </a>
+                </div>
+                <div class="col-sm-6">
+                    <h1><b>Our Office</b></h1>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <address>
+                                <strong>Addres</strong><br/> P.O. BOX 25954 <br/> Yuma AZ 85367 <br/> 425 N Main St #729</br>
+                                Salinas CA 93901
+                            </address>
+                        </div>
+                        <div class="col-sm-6">
+                            <address>
+                                <strong>Phone</strong><br/> (800)-715-6201, Ext:205, Ext(español): 215</br>
+                                <strong>E-Mail</strong><br/>
+                                <a href="mailto:sales@innopartserv.com">sales@innopartserv.com</a>
+                                <a href="mailto:sales@innopartserv.com">info@innopartserv.com</a>
+                            </address>
+                        </div>
+                    </div>
+
+                </div>
         </footer>
 
-    </div>
-
-
-
-
-    <!-- Facebook chat -->
-
-    <style>
-        .ctrlq.fb-close {
-            position: fixed;
-            right: 24px;
-            cursor: pointer
-        }
-        
-        .fb-widget {
-            background: #fff;
-            z-index: 2;
-            position: fixed;
-            width: 360px;
-            overflow: hidden;
-            opacity: 0;
-            right: 24px;
-            border-radius: 6px;
-            -o-border-radius: 6px;
-            -webkit-border-radius: 6px;
-            box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
-            -webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
-            -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
-            -o-box-shadow: 0 5px 40px rgba(0, 0, 0, .16)
-        }
-        
-        .fb-credit {
-            text-align: center;
-            margin-top: 8px
-        }
-        
-        .fb-credit a {
-            transition: none;
-            color: #bec2c9;
-            font-family: Helvetica, Arial, sans-serif;
-            font-size: 12px;
-            text-decoration: none;
-            border: 0;
-            font-weight: 400
-        }
-        
-        .ctrlq.fb-overlay {
-            z-index: 0;
-            position: fixed;
-            height: 100px;
-            width: 100px;
-            -webkit-transition: opacity .4s, visibility .4s;
-            transition: opacity .4s, visibility .4s;
-            top: 0;
-            left: 0;
-            background: rgba(0, 0, 0, .05);
-        }
-        
-        .ctrlq.fb-close {
-            z-index: 4;
-            padding: 0 6px;
-            background: #365899;
-            font-weight: 700;
-            font-size: 11px;
-            color: #fff;
-            margin: 8px;
-            border-radius: 3px;
-        }
-        
-        .ctrlq.fb-close::after {
-            content: 'x';
-            font-family: sans-serif;
-        }
-    </style>
-
-    <div class="fb-livechat">
-        <div class="fb-widget">
-            <div class="ctrlq fb-close"></div>
-            <div class="fb-page" data-href="https://www.facebook.com/IPSmotorsports/" data-tabs="messages" data-width="360" data-height="400"
-                data-small-header="true" data-hide-cover="true" data-show-facepile="false">
-                <blockquote cite="https://www.facebook.com/IPSmotorsports/" class="fb-xfbml-parse-ignore"> </blockquote>
-            </div>
-
         </div>
-        <!--<a href="https://m.me/IPSmotorsports" title="Send us a message on Facebook" class="ctrlq fb-button"></a>-->
-    </div>
-
-    <script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
 
-    <script>
-        var app = angular.module('myApp', ['ngSanitize']);
 
-        app.controller('myCtrl', function ($scope, $http) {
+        <!-- Facebook chat -->
 
-            //Inicializar aplicacion
-
-            $scope.product = {};
-
-            if (!sessionStorage.getItem("cart")) {
-                sessionStorage.setItem("cart", '[]');
+        <style>
+            .ctrlq.fb-close {
+                position: fixed;
+                right: 24px;
+                cursor: pointer
             }
 
-            $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
-            $scope.productQuantity = undefined;
+            .fb-widget {
+                background: #fff;
+                z-index: 2;
+                position: fixed;
+                width: 360px;
+                overflow: hidden;
+                opacity: 0;
+                right: 24px;
+                border-radius: 6px;
+                -o-border-radius: 6px;
+                -webkit-border-radius: 6px;
+                box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
+                -webkit-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
+                -moz-box-shadow: 0 5px 40px rgba(0, 0, 0, .16);
+                -o-box-shadow: 0 5px 40px rgba(0, 0, 0, .16)
+            }
 
-            var reg = new RegExp('[?&]product=([^&#]*)', 'i');
-            var productUrl = reg.exec(window.location.href);
+            .fb-credit {
+                text-align: center;
+                margin-top: 8px
+            }
 
-            $http.get("backend/bd_products.php?data=productoDetalle&productId=" + productUrl[1])
-                .then(function (response) {
-                    $scope.product = response.data[0];
-                    $scope.productQuantity = 1;
-                });
+            .fb-credit a {
+                transition: none;
+                color: #bec2c9;
+                font-family: Helvetica, Arial, sans-serif;
+                font-size: 12px;
+                text-decoration: none;
+                border: 0;
+                font-weight: 400
+            }
+
+            .ctrlq.fb-overlay {
+                z-index: 0;
+                position: fixed;
+                height: 100px;
+                width: 100px;
+                -webkit-transition: opacity .4s, visibility .4s;
+                transition: opacity .4s, visibility .4s;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, .05);
+            }
+
+            .ctrlq.fb-close {
+                z-index: 4;
+                padding: 0 6px;
+                background: #365899;
+                font-weight: 700;
+                font-size: 11px;
+                color: #fff;
+                margin: 8px;
+                border-radius: 3px;
+            }
+
+            .ctrlq.fb-close::after {
+                content: 'x';
+                font-family: sans-serif;
+            }
+        </style>
+
+        <div class="fb-livechat">
+            <div class="fb-widget">
+                <div class="ctrlq fb-close"></div>
+                <div class="fb-page" data-href="https://www.facebook.com/IPSmotorsports/" data-tabs="messages" data-width="360" data-height="400"
+                    data-small-header="true" data-hide-cover="true" data-show-facepile="false">
+                    <blockquote cite="https://www.facebook.com/IPSmotorsports/" class="fb-xfbml-parse-ignore"> </blockquote>
+                </div>
+
+            </div>
+            <!--<a href="https://m.me/IPSmotorsports" title="Send us a message on Facebook" class="ctrlq fb-button"></a>-->
+        </div>
+
+        <script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 
-            $scope.clickAddToCart = function (product) {
 
-                delete product.$$hashKey;
+        <script>
+            var app = angular.module('myApp', ['ngSanitize']);
 
-                var cartList = JSON.parse(sessionStorage.getItem("cart"));
-                product.quantity = $scope.productQuantity;
+            app.controller('myCtrl', function ($scope, $http) {
 
-                //verificar si ya existe
-                var productIndex = cartList.findIndex(function (item) {
-                    return item.id_product == product.id_product;
-                });
+                //Inicializar aplicacion
 
-                if (productIndex == -1) {
-                    cartList.push(product);
-                } else {
-                    cartList[productIndex].quantity = cartList[productIndex].quantity + product.quantity
-                    product = cartList[productIndex];
+                $scope.product = {};
+
+                if (!sessionStorage.getItem("cart")) {
+                    sessionStorage.setItem("cart", '[]');
                 }
 
-                $http.get("backend/bd_products.php?data=productStock&id_product=" + product.id_product)
+                $scope.cartLength = JSON.parse(sessionStorage.getItem("cart")).length;
+                $scope.productQuantity = undefined;
+
+                var reg = new RegExp('[?&]product=([^&#]*)', 'i');
+                var productUrl = reg.exec(window.location.href);
+
+                $http.get("backend/bd_products.php?data=productoDetalle&productId=" + productUrl[1])
                     .then(function (response) {
-
-                        var stock = parseInt(response.data);
-
-                        if (product.quantity <= stock) {
-
-                            sessionStorage.setItem("cart", JSON.stringify(cartList));
-                            $scope.cartLength = cartList.length;
-
-                            bootbox.alert({
-                                message: '"' + product.name + '" was successfully added to the cart.',
-                                size: 'small'
-                            });
-                        } else {
-                            document.getElementById("id-message-stock").hidden = false;
-                        }
+                        $scope.product = response.data[0];
+                        $scope.productQuantity = 1;
                     });
 
-            }
 
+                $scope.clickAddToCart = function (product) {
 
-            //Events
+                    delete product.$$hashKey;
 
-            $scope.onClickAddProduct = function (product) {
+                    var cartList = JSON.parse(sessionStorage.getItem("cart"));
+                    product.quantity = $scope.productQuantity;
 
-                $http.get("backend/bd_products.php?data=productStock&id_product=" + product.id_product)
-                    .then(function (response) {
-
-                        var stock = parseInt(response.data);
-
-                        if ($scope.productQuantity < stock) {
-                            $scope.productQuantity++;
-                        } else {
-                            document.getElementById("id-message-stock").hidden = false;
-                        }
-
+                    //verificar si ya existe
+                    var productIndex = cartList.findIndex(function (item) {
+                        return item.id_product == product.id_product;
                     });
-            }
 
-            $scope.onClickRemoveProduct = function () {
-                if ($scope.productQuantity > 1) {
-                    $scope.productQuantity--;
+                    if (productIndex == -1) {
+                        cartList.push(product);
+                    } else {
+                        cartList[productIndex].quantity = cartList[productIndex].quantity + product.quantity
+                        product = cartList[productIndex];
+                    }
+
+                    $http.get("backend/bd_products.php?data=productStock&id_product=" + product.id_product)
+                        .then(function (response) {
+
+                            var stock = parseInt(response.data);
+
+                            if (product.quantity <= stock) {
+
+                                sessionStorage.setItem("cart", JSON.stringify(cartList));
+                                $scope.cartLength = cartList.length;
+
+                                bootbox.alert({
+                                    message: '"' + product.name + '" was successfully added to the cart.',
+                                    size: 'small'
+                                });
+                            } else {
+                                document.getElementById("id-message-stock").hidden = false;
+                            }
+                        });
+
                 }
 
-                document.getElementById("id-message-stock").hidden = true;
-            }
 
-            $scope.changeImage = function (photo) {
-                document.getElementById('mainImage').src = 'resources/img/products/' + photo;
-            }
+                //Events
 
-        });
+                $scope.onClickAddProduct = function (product) {
 
+                    $http.get("backend/bd_products.php?data=productStock&id_product=" + product.id_product)
+                        .then(function (response) {
 
-        $(document).ready(function () {
+                            var stock = parseInt(response.data);
 
-            $(".fb-close").on("click", function (e) {
-                $(".fb-widget").hide("slow");
+                            if ($scope.productQuantity < stock) {
+                                $scope.productQuantity++;
+                            } else {
+                                document.getElementById("id-message-stock").hidden = false;
+                            }
+
+                        });
+                }
+
+                $scope.onClickRemoveProduct = function () {
+                    if ($scope.productQuantity > 1) {
+                        $scope.productQuantity--;
+                    }
+
+                    document.getElementById("id-message-stock").hidden = true;
+                }
+
+                $scope.changeImage = function (photo) {
+                    document.getElementById('mainImage').src = 'resources/img/products/' + photo;
+                }
+
             });
 
-            $(".send-message-facebook").on("click", function (e) {
-                $(".fb-widget").show().animate({ bottom: "30px", opacity: 1 }, 2 * 125);
-                $("._58an").focus();
-            });
 
-        });
-    </script>
+            $(document).ready(function () {
+
+                $(".fb-close").on("click", function (e) {
+                    $(".fb-widget").hide("slow");
+                });
+
+                $(".send-message-facebook").on("click", function (e) {
+                    $(".fb-widget").show().animate({ bottom: "30px", opacity: 1 }, 2 * 125);
+                    $("._58an").focus();
+                });
+
+            });
+        </script>
 
 
 </body>

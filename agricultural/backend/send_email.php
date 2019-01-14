@@ -6,8 +6,10 @@ $message = "
 <title>HTML email</title>
 </head>
 <body>
-<h2>Mensaje enviado del portal <b>MotorSports</b>:</h2>
-<p>".$_GET["message"]."</p>
+<h2>Mensaje enviado del portal <b>Industrial</b>:</h2>
+<p>Telefono: ".$_GET["phone"]."</p>
+<p>Company: ".$_GET["phone"]."</p>
+<p>Message: ".$_GET["message"]."</p>
 Atte. <b>".$_GET["name"]."</b>
 </body>
 </html>

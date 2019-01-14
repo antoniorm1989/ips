@@ -15,6 +15,13 @@ switch ($_GET["process"]) {
             $target_dir = "../agricultural/resources/img/brands/";
         }
         break;
+    case "category":
+        if($_GET["store"] == 'motorsport'){
+            $target_dir = "../motorsports/resources/img/categories/";
+        }else{
+            $target_dir = "../agricultural/resources/img/categories/";
+        }
+        break;
 }
 
 $data = $_GET["data"];

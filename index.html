@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+    <title>IPS</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="agricultural/resources/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/png" href="agricultural/resources/img/icon.ico">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+
+    <style>
+         :root {
+            --first-bg-color: #A01D26;
+            --second-bg-color: #ACBEBE;
+            --third-bg-color: #20232A;
+            --fourth-bg-color: #F4F4EF;
+        }
+
+        body {
+            background-color: var(--fourth-bg-color);
+        }
+
+        .navbar{
+            background-color: var(--third-bg-color);
+            border-color: var(--third-bg-color);
+        }
+
+        .navbar-brand {
+            height: 80px;
+        }
+
+        .nav>li>a {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        .navbar-toggle {
+            padding: 10px;
+            margin: 25px 15px 25px 0;
+        }
+
+        body,
+        html {
+            height: 100%;
+        }
+
+        .carousel-inner>.item>img,
+        .carousel-inner>.item>a>img {
+            width: 50%;
+            margin: auto;
+        }
+
+        .active {
+            display: flex !important;
+        }
+
+        .jumbotron {
+            background-color: var(--second-bg-color);
+        }
+
+        .footer {
+            color: black;
+            background-color: var(--second-bg-color);
+        }
+
+        h1 {
+            font-size: 20px;
+            text-transform: uppercase;
+            color: var(--first-bg-color);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            margin-top: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'montserratbold';
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'montserratbold';
+            font-weight: normal;
+            letter-spacing: 1.5px;
+        }
+
+        html,
+        body {
+            font-weight: 400;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            padding: 10px 0px 10px 0px;
+            background-color: var(--first-bg-color);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl" style="background-color: transparent;">
+
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container" style="width:100%;">
+            <div class="navbar-header col-lg-7 col-sm-7 col-xs-12" style="display: flex;">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="agricultural/resources/img/logo-nuevo.png" style="width: 100%;">
+                </a>
+            </div>
+            <div id="navbar3" class="navbar-collapse collapse col-lg-5 col-sm-5 col-xs-12">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html"><b>Home</b></a></li>
+                    <li><a href="agricultural/products.html"><b>Products</b></a></li>
+                    <li><a href="agricultural/about.html"><b>About us</b></a></li>
+                    <li><a href="agricultural/contact.html"><b>Contact</b></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- seccion slider -->
+    <div class="container-fluid" style="padding: 20px; margin-top: -25px">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="agricultural/resources/img/slider_1.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img src="agricultural/resources/img/slider_2.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img src="agricultural/resources/img/slider_3.png" alt="...">
+                </div>
+                <div class="item">
+                    <img src="agricultural/resources/img/slider_4.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img src="agricultural/resources/img/slider_5.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img src="agricultural/resources/img/slider_6.jpg" alt="...">
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+        <!-- Carousel -->
+
+    </div>
+
+
+    <!-- seccion de brands-->
+    <center>
+
+        <div class="section-title text-center">
+            <h1><b>Our custom parts will save you money</b></h1>
+            <h2><b>View Our Custom Part Categories</b></h2>
+        </div>
+
+        <div class="container-fluid" style="padding: 20px">
+            <center>
+                <div class="row" style="width: 100%;">
+                    <div ng-repeat="c in categories" class="col-lg-4 col-sm-4 col-xs-12">
+                        <div class="card" style="margin-top: 30px">
+                            <div class="row" style="height: 100px;">
+                                <div class="col-lg-6 col-sm-6 col-xs-6">
+                                    <img style="height:100px; width:100px;" class="image-brand img-responsive img-thumbnail" src="agricultural/resources/img/categories/{{c.photos[0]}}">
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-6" style="color:var(--fourth-bg-color);text-align: left; font-size: smaller;">
+                                    <b style="color: var(--fourth-bg-color);">{{c.description}}</b>
+                                    <p/>
+                                    </br>
+                                    <b style="color: var(--third-bg-color);">
+                                        <a href="#" ng-click="addFilterBrand(c.id_cto_product_category)">
+                                            Click here to view our full line.
+                                        </a>
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+    </center>
+
+
+    <center>
+        <iframe style="margin: 80px;" width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLXmQ8DxdtCleAtKDsrP5YTiALOqVFIkvh&autoplay=1"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </center>
+
+
+
+    <script>
+        $('#myCarousel').carousel({
+            interval: 4000
+        })
+
+        $('.carousel .item-slider').each(function () {
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+
+            for (var i = 0; i < 2; i++) {
+                next = next.next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
+                }
+
+                next.children(':first-child').clone().appendTo($(this));
+            }
+        });
+    </script>
+
+
+    <div class="container">
+
+
+    </div>
+
+
+    <footer class="container-fluid text-center footer" style="padding: 20px">
+        <div class="row">
+            <div class="col-sm-3">
+                <h1><b>Business Hours</b></h1>
+                <b>Monday - Friday - 8:00 - 5:00 PM CST</b><br>
+                <b>Saturday - Sunday - Closed</b>
+            </div>
+            <div class="col-sm-3">
+
+                <h1><b> Quick Links</b></h1>
+
+                <a href="https://www.facebook.com/InnovationsPartService/">
+                    <i class="fa fa-facebook-square fa-2x" aria-hidden="true" style="color: #3b5998"></i>
+                    <kbd>Facebook</kbd>
+                </a>
+                </br>
+                <a href="#">
+                    <i class="fa fa-youtube-play fa-2x" aria-hidden="true" style="color: red"></i>
+                    <kbd>Youtube</kbd>
+                </a>
+                </br>
+                <a href="#">
+                    <i class="fa fa-instagram fa-2x" aria-hidden="true" style="color: #517fa4"></i>
+                    <kbd>Instagram</kbd>
+                </a>
+            </div>
+            <div class="col-sm-6">
+                <h1><b>Our Office</b></h1>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <address>
+                            <strong>Addres</strong><br/> P.O. BOX 25954 <br/> Yuma AZ 85367 <br/> 425 N Main St #729</br>
+                            Salinas CA 93901
+                        </address>
+                    </div>
+                    <div class="col-sm-6">
+                        <address>
+                            <strong>Phone</strong><br/> (800)-715-6201, Ext:205. Ext(espa���ol): 686-188-8819 Ext:215</br>
+                            <strong>E-Mail</strong><br/>
+                            <a href="mailto:sales@innopartserv.com">sales@innopartserv.com</a>
+                            <a href="mailto:sales@innopartserv.com">info@innopartserv.com</a>
+                        </address>
+                    </div>
+                </div>
+
+            </div>
+    </footer>
+
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $http) {
+
+            $scope.categories = [];
+
+            // Click de los filtros de las marcas
+            $scope.addFilterBrand = function (categoryId) {
+                window.location.href = "agricultural/products.html?category=" + categoryId;
+            }
+
+            $http.get("agricultural/backend/bd_products.php?data=categoria")
+                .then(function (response) {
+                    if (response.data) {
+                        $scope.categories = response.data;
+                    }
+                });
+
+        });
+    </script>
+
+
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat" attribution=setup_tool page_id="147665135786499" theme_color="#fa3c4c">
+    </div>
+
+
+</body>
+
+</html>
