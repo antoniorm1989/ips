@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
     <title>IPS</title>
-    <meta charset="utf-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="resources/lib/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="icon" type="image/png" href="resources/img/icon.ico">
+    <link rel="stylesheet" href="agricultural/resources/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/png" href="agricultural/resources/img/icon.ico">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
@@ -62,14 +62,6 @@
 
         .jumbotron {
             background-color: var(--second-bg-color);
-        }
-
-        html {
-            background: url(resources/img/metal-background.jpg) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
         }
 
         .footer {
@@ -129,15 +121,15 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index.html">
-                    <img src="resources/img/logo principal agricultura.png" alt="" style="margin: -3% 0% 0% 0%; height: 70px; width: 350px;">
+                    <img src="agricultural/resources/img/logo principal agricultura.png" alt="" style="margin: -3% 0% 0% 0%; height: 70px; width: 350px;">
                 </a>
             </div>
             <div id="navbar3" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" style="margin-left: 10%;">
                     <li class="active"><a href="index.html"><b>Home</b></a></li>
-                    <li><a href="products.html"><b>Products</b></a></li>
-                    <li><a href="about.html"><b>About us</b></a></li>
-                    <li><a href="contact.html"><b>Contact</b></a></li>
+                    <li><a href="agricultural/products.html"><b>Products</b></a></li>
+                    <li><a href="agricultural/about.html"><b>About us</b></a></li>
+                    <li><a href="agricultural/contact.html"><b>Contact</b></a></li>
                 </ul>
             </div>
         </div>
@@ -151,22 +143,22 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="resources/img/slider_1.jpg" alt="...">
+                    <img src="agricultural/resources/img/slider_1.jpg" alt="...">
                 </div>
                 <div class="item">
-                    <img src="resources/img/slider_2.jpg" alt="...">
+                    <img src="agricultural/resources/img/slider_2.jpg" alt="...">
                 </div>
                 <div class="item">
-                    <img src="resources/img/slider_3.png" alt="...">
+                    <img src="agricultural/resources/img/slider_3.png" alt="...">
                 </div>
                 <div class="item">
-                    <img src="resources/img/slider_4.jpg" alt="...">
+                    <img src="agricultural/resources/img/slider_4.jpg" alt="...">
                 </div>
                 <div class="item">
-                    <img src="resources/img/slider_5.jpg" alt="...">
+                    <img src="agricultural/resources/img/slider_5.jpg" alt="...">
                 </div>
                 <div class="item">
-                    <img src="resources/img/slider_6.jpg" alt="...">
+                    <img src="agricultural/resources/img/slider_6.jpg" alt="...">
                 </div>
             </div>
 
@@ -198,7 +190,7 @@
                         <div class="card" style="margin-top: 20px">
                             <div class="row">
                                 <div class="col-lg-6 col-sm-6 col-xs-6">
-                                    <img style="height:100px; width:100px;" class="image-brand img-responsive img-thumbnail" src="resources/img/categories/{{c.photos[0]}}">
+                                    <img style="height:100px; width:100px;" class="image-brand img-responsive img-thumbnail" src="agricultural/resources/img/categories/{{c.photos[0]}}">
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-xs-6" style="color:var(--fourth-bg-color);text-align: left;">
                                     <b style="color: var(--fourth-bg-color);">{{c.description}}</b>
@@ -315,10 +307,10 @@
 
             // Click de los filtros de las marcas
             $scope.addFilterBrand = function (categoryId) {
-                window.location.href = "products.html?category=" + categoryId;
+                window.location.href = "agricultural/products.html?category=" + categoryId;
             }
 
-            $http.get("backend/bd_products.php?data=categoria")
+            $http.get("agricultural/backend/bd_products.php?data=categoria")
                 .then(function (response) {
                     if (response.data) {
                         $scope.categories = response.data;

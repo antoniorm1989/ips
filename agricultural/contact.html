@@ -3,8 +3,9 @@
 
 <head>
     <title>IPS</title>
-    <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -20,7 +21,7 @@
             background-color: var(--fourth-bg-color);
         }
 
-        .navbar{
+        .navbar {
             background-color: var(--third-bg-color);
             border-color: var(--third-bg-color);
         }
@@ -83,7 +84,7 @@
                 </div>
                 <div id="navbar3" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" style="margin-left: 10%;">
-                        <li><a href="index.html"><b>Home</b></a></li>
+                        <li><a href="../index.html"><b>Home</b></a></li>
                         <li><a href="products.html"><b>Products</b></a></li>
                         <li><a href="about.html"><b>About us</b></a></li>
                         <li class="active"><a href="contact.html"><b>Contact</b></a></li>
@@ -106,36 +107,30 @@
                                     <input type="text" class="form-control" id="name" placeholder="Enter full name" required="required" ng-model="name" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">
-                                            Phone number
-                                        </label>
-                                    <input type="text" class="form-control" id="name" placeholder="Enter phone number" required="required" ng-model="name" />
+                                    <label for="name">Phone number</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter phone number" required="required" ng-model="phone" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">
-                                                Company name
-                                            </label>
-                                    <input type="text" class="form-control" id="name" placeholder="Enter company name" required="required" ng-model="name" />
+                                    <label for="name">Company name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter company name" required="required" ng-model="company" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">
-                                Email Address</label>
+                                    <label for="email">Email Address</label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
                                         </span>
                                         <input type="email" class="form-control" id="email" placeholder="Enter email" required="required" ng-model="mail" /></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="subject">
-                                Subject</label>
+                                    <label for="subject">Subject</label>
                                     <select id="subject" name="subject" class="form-control" required="required" ng-model="subject">
-                                <option value="na" selected="true">Choose One:</option>
-                                <option value="service">General Customer Service</option>
-                                <option value="suggestions">Suggestions</option>
-                                <option value="product">Product Support</option>
-                                <option value="product">Make an Order</option>
-                                <option value="product">Open Account</option>
-                            </select>
+                                        <option value="na" selected="true">Choose One:</option>
+                                        <option value="service">General Customer Service</option>
+                                        <option value="suggestions">Suggestions</option>
+                                        <option value="product">Product Support</option>
+                                        <option value="product">Make an Order</option>
+                                        <option value="product">Open Account</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -194,8 +189,10 @@
             $scope.mail = "";
             $scope.message = "";
             $scope.subject = "";
+            $scope.company = "";
+            $scope.phone = "";
             $scope.sendMessage = function () {
-                $http.get("send_email.php?name=" + $scope.name + "&&mail=" + $scope.mail + "&&message=" + $scope.message + "&&subject=" + $scope.subject)
+                $http.get("backend/send_email.php?name=" + $scope.name + "&mail=" + $scope.mail + "&message=" + $scope.message + "&subject=" + $scope.subject + "&phone=" + $scope.phone + "&company=" + $scope.company)
                     .then(function (response) {
                         if (response.data == "success") {
                             alert("your email was sent successfully");

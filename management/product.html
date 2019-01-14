@@ -71,10 +71,10 @@
 
             <div class="form-group">
                 <label for="product_short_description">Short description:</label>
-                <div id="product_short_description" class="summernote">Descriprion default.</div>
+                <div id="product_short_description" class="summernote">Default description.</div>
 
                 <label for="product_description">Long Description:</label>
-                <div id="product_description" class="summernote">Descriprion default.</div>
+                <div id="product_description" class="summernote">Default description.</div>
             </div>
 
 
@@ -321,8 +321,8 @@
                     data: { id_product: id_product }
                 }).then(function successCallback(response) {
                     $scope.product = response.data[0];
-                    $('.summernote').eq(0).summernote('code', $scope.product.short_description);
-                    $('.summernote').eq(1).summernote('code', $scope.product.description);
+                    $('.summernote').eq(0).summernote('code', $scope.product.short_description != "" ? $scope.product.short_description : "Default description");
+                    $('.summernote').eq(1).summernote('code', $scope.product.description != "" ? $scope.product.description : "Default description");
                     $scope.isUpdate = true;
                     document.getElementById("product-register").hidden = false;
                     document.getElementById("list-products").hidden = true;
